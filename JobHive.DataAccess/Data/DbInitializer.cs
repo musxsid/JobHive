@@ -21,3 +21,4 @@ namespace JobHive.DataAccess.Data
         }
     }
 }
+

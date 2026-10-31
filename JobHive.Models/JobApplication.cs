@@ -72,3 +72,4 @@ namespace JobHive.Models
         }
     }
 }
+

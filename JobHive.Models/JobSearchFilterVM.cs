@@ -25,3 +25,4 @@ namespace JobHive.Models
         public Dictionary<string, int> ExperienceCounts { get; set; } = new();
     }
 }
+

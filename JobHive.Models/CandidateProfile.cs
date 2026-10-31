@@ -44,3 +44,4 @@ namespace JobHive.Models
         public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
     }
 }
+

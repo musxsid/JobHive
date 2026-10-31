@@ -1,4 +1,24 @@
-﻿// Please see documentation at https://learn.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
+// JobHive Interactive Client Scripts
 
-// Write your JavaScript code.
+document.addEventListener("DOMContentLoaded", function () {
+    // Enable Bootstrap tooltips if any
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl);
+    });
+
+    // File input name preview
+    const fileInputs = document.querySelectorAll('input[type="file"]');
+    fileInputs.forEach(input => {
+        input.addEventListener('change', function (e) {
+            if (this.files && this.files[0]) {
+                const fileName = this.files[0].name;
+                const parentBox = this.closest('.border') || this.parentElement;
+                const existingLabel = parentBox.querySelector('.file-selected-label');
+                if (existingLabel) {
+                    existingLabel.textContent = `Selected: ${fileName}`;
+                }
+            }
+        });
+    });
+});

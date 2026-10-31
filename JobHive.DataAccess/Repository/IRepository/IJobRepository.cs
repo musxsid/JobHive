@@ -10,3 +10,4 @@ namespace JobHive.DataAccess.Repository.IRepository
         IEnumerable<Job> GetFeaturedJobs(int count = 6);
     }
 }
+

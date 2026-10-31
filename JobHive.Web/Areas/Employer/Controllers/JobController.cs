@@ -160,3 +160,4 @@ namespace JobHive.Web.Areas.Employer.Controllers
         }
     }
 }
+

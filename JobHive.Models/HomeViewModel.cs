@@ -23,3 +23,4 @@ namespace JobHive.Models
         public string IconColorClass { get; set; } = "text-primary";
     }
 }
+

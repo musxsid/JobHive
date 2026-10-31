@@ -31,3 +31,4 @@ namespace JobHive.Web.Areas.Admin.Controllers
         }
     }
 }
+

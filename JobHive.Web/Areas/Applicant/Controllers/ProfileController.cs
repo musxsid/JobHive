@@ -97,3 +97,4 @@ namespace JobHive.Web.Areas.Applicant.Controllers
         }
     }
 }
+

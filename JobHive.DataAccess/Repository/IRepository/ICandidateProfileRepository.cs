@@ -8,3 +8,4 @@ namespace JobHive.DataAccess.Repository.IRepository
         CandidateProfile? GetByEmail(string email);
     }
 }
+

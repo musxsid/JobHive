@@ -43,3 +43,4 @@ namespace JobHive.DataAccess.Repository
         }
     }
 }
+

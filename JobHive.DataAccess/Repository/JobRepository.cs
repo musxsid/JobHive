@@ -158,3 +158,4 @@ namespace JobHive.DataAccess.Repository
         }
     }
 }
+

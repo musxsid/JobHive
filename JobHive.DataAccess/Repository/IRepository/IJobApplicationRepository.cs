@@ -11,3 +11,4 @@ namespace JobHive.DataAccess.Repository.IRepository
         IEnumerable<JobApplication> GetApplicationsByApplicantEmail(string email);
     }
 }
+
