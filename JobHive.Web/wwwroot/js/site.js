@@ -178,40 +178,8 @@ document.addEventListener("DOMContentLoaded", function () {
     document.querySelectorAll(".counter-value").forEach(el => counterObserver.observe(el));
 
     // ============================
-    // 7. PARALLAX & 3D INTERACTIVE TILT
+    // 7. DYNAMIC CURSOR SPOTLIGHT
     // ============================
-    const hero = document.querySelector(".hero-section");
-    const heroInner = hero ? hero.querySelector(".hero-banner-wrapper") : null;
-    if (hero && heroInner && window.innerWidth > 992) {
-        hero.addEventListener("mousemove", (e) => {
-            const rect = hero.getBoundingClientRect();
-            const cx = (e.clientX - rect.left) / rect.width - 0.5;
-            const cy = (e.clientY - rect.top) / rect.height - 0.5;
-            heroInner.style.transform = `translate(${cx * 18}px, ${cy * 18}px)`;
-        });
-        hero.addEventListener("mouseleave", () => {
-            heroInner.style.transform = "translate(0,0)";
-        });
-    }
-
-    // Interactive 3D Card Hover Depth
-    if (window.innerWidth > 992) {
-        document.querySelectorAll(".category-card, .job-item-card, .process-step-card").forEach(card => {
-            card.addEventListener("mousemove", (e) => {
-                const rect = card.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                const xc = x / rect.width - 0.5;
-                const yc = y / rect.height - 0.5;
-                card.style.transform = `translateY(-6px) perspective(900px) rotateX(${yc * -6}deg) rotateY(${xc * 6}deg)`;
-            });
-            card.addEventListener("mouseleave", () => {
-                card.style.transform = "";
-            });
-        });
-    }
-
-    // Dynamic Cursor Spotlight
     const spotlight = document.getElementById("cursor-spotlight");
     if (spotlight && window.innerWidth > 992) {
         let mouseX = window.innerWidth / 2;

@@ -60,91 +60,34 @@
                 </div>
             </div>
 
-            <!-- Hero Visual Banner Card (Interactive Showcase) -->
+            <!-- Hero Visual Showcase (Clean Semantic Frame, Zero Unnecessary Divs) -->
             <div class="col-lg-5">
-                <div class="hero-banner-wrapper">
-                    <!-- Floating Stat 1 (Top-Right Floating Above) -->
-                    <div class="hero-floating-stat stat-top-right">
-                        <div class="floating-stat-icon">
+                <figure class="hero-visual-frame position-relative m-0">
+                    <!-- Floating Stat Top -->
+                    <aside class="hero-floating-stat stat-float-top">
+                        <span class="floating-stat-icon">
                             <i class="bi bi-briefcase-fill"></i>
-                        </div>
-                        <div>
-                            <p class="floating-stat-label">Active Vacancies</p>
-                            <h4 class="floating-stat-value">@Model.TotalActiveJobs+ Open</h4>
-                        </div>
-                    </div>
+                        </span>
+                        <span>
+                            <small class="floating-stat-label d-block">Active Vacancies</small>
+                            <strong class="floating-stat-value">@Model.TotalActiveJobs+ Open</strong>
+                        </span>
+                    </aside>
 
-                    <!-- Floating Stat 2 (Bottom-Left Floating Below) -->
-                    <div class="hero-floating-stat stat-bottom-left">
-                        <div class="floating-stat-icon bg-success-subtle text-success">
+                    <!-- Real Professional Visual (Matching Design Reference) -->
+                    <img src="~/images/hero-candidates.jpg" alt="Professionals Discovering Careers on JobHive" class="hero-banner-image" />
+
+                    <!-- Floating Stat Bottom -->
+                    <aside class="hero-floating-stat stat-float-bottom">
+                        <span class="floating-stat-icon bg-success-subtle text-success">
                             <i class="bi bi-patch-check-fill"></i>
-                        </div>
-                        <div>
-                            <p class="floating-stat-label">Verified Employers</p>
-                            <h4 class="floating-stat-value">@Model.TotalCompanies+ Hiring</h4>
-                        </div>
-                    </div>
-
-                    <!-- Purple Hero Banner Card -->
-                    <div class="hero-banner-card card-premium-glow">
-                        <div class="p-4 text-white text-start">
-                            <div class="mb-3">
-                                <span class="badge bg-white bg-opacity-20 text-white fw-bold px-3 py-2 rounded-pill border border-white-subtle">
-                                    <i class="bi bi-lightning-charge-fill text-warning me-1"></i> Fast-Track Hiring
-                                </span>
-                            </div>
-                            <h3 class="fw-bold mb-1 text-white">Your Career Accelerated</h3>
-                            <p class="small text-white text-opacity-75 mb-3">Connecting top talent with premier companies</p>
-
-                            <!-- Live Matching Preview Feed -->
-                            <div class="hero-match-feed mb-3">
-                                <div class="hero-match-item">
-                                    <div class="d-flex align-items-center gap-2">
-                                        <div class="match-logo"><i class="bi bi-laptop"></i></div>
-                                        <div>
-                                            <div class="fw-bold text-white small">TechCorp Global</div>
-                                            <div class="text-white-50" style="font-size: 0.72rem;">Senior Developer &bull; Remote</div>
-                                        </div>
-                                    </div>
-                                    <span class="badge bg-success bg-opacity-25 text-white border border-success-subtle" style="font-size: 0.7rem;">Shortlisted</span>
-                                </div>
-                                <div class="hero-match-item">
-                                    <div class="d-flex align-items-center gap-2">
-                                        <div class="match-logo"><i class="bi bi-palette"></i></div>
-                                        <div>
-                                            <div class="fw-bold text-white small">PixelCraft Studios</div>
-                                            <div class="text-white-50" style="font-size: 0.72rem;">Lead Designer &bull; Bangalore</div>
-                                        </div>
-                                    </div>
-                                    <span class="badge bg-warning bg-opacity-25 text-white border border-warning-subtle" style="font-size: 0.7rem;">Interview</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Candidate Dashboard Visual Preview (Clean, Consumer-Friendly) -->
-                        <div class="bg-white rounded-4 p-3 text-start shadow-sm mx-auto w-100 mb-2">
-                            <div class="d-flex align-items-center justify-content-between mb-2">
-                                <div class="d-flex align-items-center gap-2">
-                                    <div class="bg-primary text-white rounded-circle fw-bold" style="width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; font-size: 0.85rem;">S</div>
-                                    <div>
-                                        <h6 class="fw-bold mb-0 text-dark small">Siddharth</h6>
-                                        <small class="text-success" style="font-size: 0.72rem;"><i class="bi bi-check-circle-fill"></i> Profile Ready to Apply</small>
-                                    </div>
-                                </div>
-                                <span class="badge bg-primary-subtle text-primary fw-bold px-2 py-1" style="font-size: 0.72rem;">85% Match</span>
-                            </div>
-
-                            <div class="progress mb-2" style="height: 6px;">
-                                <div class="progress-bar progress-bar-striped progress-bar-animated bg-primary" role="progressbar" style="width: 85%"></div>
-                            </div>
-
-                            <div class="d-flex justify-content-between align-items-center text-muted" style="font-size: 0.75rem;">
-                                <span><i class="bi bi-send text-primary me-1"></i> 4 Active Applications</span>
-                                <span class="text-success fw-bold"><i class="bi bi-calendar2-check me-1"></i> 2 Interviews</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                        </span>
+                        <span>
+                            <small class="floating-stat-label d-block">Verified Employers</small>
+                            <strong class="floating-stat-value">@Model.TotalCompanies+ Hiring</strong>
+                        </span>
+                    </aside>
+                </figure>
             </div>
         </div>
     </div>
@@ -273,54 +216,54 @@
             </p>
         </div>
 
-        <div class="row g-4">
-            <div class="col-lg-3 col-md-6">
-                <div class="process-step-card">
-                    <div class="process-step-num">1</div>
+        <ol class="row g-4 list-unstyled mb-0">
+            <li class="col-lg-3 col-md-6">
+                <article class="process-step-card h-100">
+                    <span class="process-step-num">1</span>
                     <h5 class="process-step-title">Discover Vacancies</h5>
                     <p class="process-step-desc">
                         Explore verified openings using smart filters by job title, location, compensation, and workplace flexibility.
                     </p>
-                </div>
-            </div>
+                </article>
+            </li>
 
-            <div class="col-lg-3 col-md-6">
-                <div class="process-step-card">
-                    <div class="process-step-num">2</div>
+            <li class="col-lg-3 col-md-6">
+                <article class="process-step-card h-100">
+                    <span class="process-step-num">2</span>
                     <h5 class="process-step-title">Create Profile</h5>
                     <p class="process-step-desc">
                         Build your candidate profile, upload your resume document, and highlight your core strengths.
                     </p>
-                </div>
-            </div>
+                </article>
+            </li>
 
-            <div class="col-lg-3 col-md-6">
-                <div class="process-step-card">
-                    <div class="process-step-num">3</div>
+            <li class="col-lg-3 col-md-6">
+                <article class="process-step-card h-100">
+                    <span class="process-step-num">3</span>
                     <h5 class="process-step-title">1-Click Apply</h5>
                     <p class="process-step-desc">
                         Submit applications instantly with your uploaded resume and a personalized cover message for recruiters.
                     </p>
-                </div>
-            </div>
+                </article>
+            </li>
 
-            <div class="col-lg-3 col-md-6">
-                <div class="process-step-card">
-                    <div class="process-step-num">4</div>
+            <li class="col-lg-3 col-md-6">
+                <article class="process-step-card h-100">
+                    <span class="process-step-num">4</span>
                     <h5 class="process-step-title">Get Hired</h5>
                     <p class="process-step-desc">
                         Follow live status updates from initial application review to interview invitations and final offers.
                     </p>
-                </div>
-            </div>
-        </div>
+                </article>
+            </li>
+        </ol>
     </div>
 </section>
 
 <!-- 5. AWESOME RESUME BANNER (Consumer-Facing, Clean Preview) -->
 <section class="section-full reveal">
     <div class="container">
-        <div class="awesome-resume-card">
+        <aside class="awesome-resume-card">
             <div class="row align-items-center g-5">
                 <div class="col-lg-7">
                     <span class="badge bg-white text-primary px-3 py-2 rounded-pill fw-bold mb-3">
@@ -341,57 +284,35 @@
                 </div>
 
                 <div class="col-lg-5">
-                    <div class="resume-preview-box">
-                        <div class="d-flex align-items-center gap-3 mb-3 pb-3 border-bottom border-white-50">
-                            <div class="bg-white text-primary rounded-circle p-2 px-3 fw-bold fs-5">S</div>
-                            <div>
-                                <h5 class="fw-bold mb-0 text-white">Siddharth</h5>
-                                <small class="text-white-50">Registered Candidate &bull; Job Seeker</small>
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <small class="text-white-50 text-uppercase fw-bold">Verified Highlights</small>
-                            <div class="d-flex flex-wrap gap-2 mt-2">
-                                <span class="badge bg-white text-dark py-1 px-3">Problem Solving</span>
-                                <span class="badge bg-white text-dark py-1 px-3">Team Leadership</span>
-                                <span class="badge bg-white text-dark py-1 px-3">Effective Communication</span>
-                                <span class="badge bg-white text-dark py-1 px-3">Analytical Thinking</span>
-                            </div>
-                        </div>
-                        <div class="bg-white bg-opacity-25 rounded-3 p-3 d-flex align-items-center justify-content-between">
-                            <div>
-                                <i class="bi bi-file-earmark-pdf-fill fs-3 text-warning me-2"></i>
-                                <span class="small fw-bold">Candidate_Resume.pdf</span>
-                            </div>
-                            <span class="badge bg-success">Ready to Share</span>
-                        </div>
-                    </div>
+                    <figure class="m-0">
+                        <img src="~/images/awesome-resume.jpg" alt="Candidate Resume Preparation" class="rounded-4 w-100 shadow-lg object-fit-cover" style="height: 320px; border: 4px solid rgba(255, 255, 255, 0.2);" />
+                    </figure>
                 </div>
             </div>
-        </div>
+        </aside>
     </div>
 </section>
 
 <!-- 6. PLATFORM TRUST METRICS BAR (Animated Counter) -->
 <section class="py-5 bg-white border-top border-bottom reveal">
     <div class="container">
-        <div class="row g-4 text-center">
+        <dl class="row g-4 text-center mb-0">
             <div class="col-md-3 col-6">
-                <div class="counter-number counter-value" data-target="15000">0</div>
-                <div class="counter-label">Active Vacancies</div>
+                <dt class="counter-number counter-value" data-target="15000">0</dt>
+                <dd class="counter-label mb-0">Active Vacancies</dd>
             </div>
             <div class="col-md-3 col-6">
-                <div class="counter-number counter-value" data-target="4200">0</div>
-                <div class="counter-label">Verified Companies</div>
+                <dt class="counter-number counter-value" data-target="4200">0</dt>
+                <dd class="counter-label mb-0">Verified Companies</dd>
             </div>
             <div class="col-md-3 col-6">
-                <div class="counter-number counter-value" data-target="85000">0</div>
-                <div class="counter-label">Applications Handled</div>
+                <dt class="counter-number counter-value" data-target="85000">0</dt>
+                <dd class="counter-label mb-0">Applications Handled</dd>
             </div>
             <div class="col-md-3 col-6">
-                <div class="counter-number counter-value" data-target="98">0</div>
-                <div class="counter-label">% Candidate Satisfaction</div>
+                <dt class="counter-number counter-value" data-target="98">0</dt>
+                <dd class="counter-label mb-0">% Candidate Satisfaction</dd>
             </div>
-        </div>
+        </dl>
     </div>
 </section>
