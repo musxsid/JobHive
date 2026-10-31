@@ -1,0 +1,168 @@
+@model IEnumerable<JobApplication>
+@{
+    var job = ViewBag.Job as Job;
+    ViewData["Title"] = $"Applicants for {job?.Title}";
+}
+
+<div class="container py-5">
+    <!-- Breadcrumb & Header -->
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 gap-3">
+        <div>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb mb-2">
+                    <li class="breadcrumb-item"><a asp-action="Index">Vacancies</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Applicants</li>
+                </ol>
+            </nav>
+            <h2 class="fw-bold text-dark mb-1">
+                Applicants: <span class="text-primary">@job?.Title</span>
+            </h2>
+            <div class="text-muted small">
+                <i class="bi bi-building me-1"></i> @job?.CompanyName &bull;
+                <i class="bi bi-geo-alt me-1"></i> @job?.Location &bull;
+                <span class="badge bg-light text-dark border">@job?.Category?.Name</span>
+            </div>
+        </div>
+
+        <div class="d-flex gap-2">
+            <a asp-action="Index" class="btn btn-outline-secondary">
+                <i class="bi bi-arrow-left me-1"></i> Back to Vacancies
+            </a>
+            <a asp-area="Applicant" asp-controller="Jobs" asp-action="Details" asp-route-id="@job?.Id" target="_blank" class="btn btn-light border">
+                <i class="bi bi-box-arrow-up-right me-1"></i> Public View
+            </a>
+        </div>
+    </div>
+
+    <!-- Applicants Summary Metrics -->
+    <div class="row g-3 mb-4">
+        <div class="col-6 col-md-3">
+            <div class="card border-0 shadow-sm rounded-4 p-3 bg-white text-center">
+                <span class="small text-muted text-uppercase fw-bold">Total Applicants</span>
+                <h3 class="fw-bold text-primary mb-0 mt-1">@Model.Count()</h3>
+            </div>
+        </div>
+        <div class="col-6 col-md-3">
+            <div class="card border-0 shadow-sm rounded-4 p-3 bg-white text-center">
+                <span class="small text-muted text-uppercase fw-bold">Under Review</span>
+                <h3 class="fw-bold text-info mb-0 mt-1">@Model.Count(a => a.Status == "Under Review" || a.Status == "Applied")</h3>
+            </div>
+        </div>
+        <div class="col-6 col-md-3">
+            <div class="card border-0 shadow-sm rounded-4 p-3 bg-white text-center">
+                <span class="small text-muted text-uppercase fw-bold">Interviews</span>
+                <h3 class="fw-bold text-secondary mb-0 mt-1">@Model.Count(a => a.Status == "Interview" || a.Status == "Shortlisted")</h3>
+            </div>
+        </div>
+        <div class="col-6 col-md-3">
+            <div class="card border-0 shadow-sm rounded-4 p-3 bg-white text-center">
+                <span class="small text-muted text-uppercase fw-bold">Offers Extended</span>
+                <h3 class="fw-bold text-success mb-0 mt-1">@Model.Count(a => a.Status == "Offered")</h3>
+            </div>
+        </div>
+    </div>
+
+    <!-- Applicant Cards / Pipeline -->
+    @if (Model.Any())
+    {
+        <div class="row g-4">
+            @foreach (var app in Model)
+            {
+                <div class="col-lg-6">
+                    <div class="card border-0 shadow-sm rounded-4 p-4 bg-white h-100">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <div class="d-flex align-items-center gap-3">
+                                <div class="bg-primary-subtle text-primary rounded-circle p-2 px-3 fw-bold fs-5">
+                                    @(string.IsNullOrEmpty(app.ApplicantName) ? "C" : app.ApplicantName[0].ToString())
+                                </div>
+                                <div>
+                                    <h5 class="fw-bold text-dark mb-0">@app.ApplicantName</h5>
+                                    <div class="small text-muted">
+                                        <a href="mailto:@app.ApplicantEmail" class="text-decoration-none text-muted me-2"><i class="bi bi-envelope me-1"></i>@app.ApplicantEmail</a>
+                                        <span><i class="bi bi-telephone me-1"></i>@app.ApplicantPhone</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <span class="badge @app.StatusBadgeClass fs-6 px-3 py-2 rounded-pill">
+                                @app.Status
+                            </span>
+                        </div>
+
+                        @if (!string.IsNullOrWhiteSpace(app.CoverLetter))
+                        {
+                            <div class="p-3 bg-light rounded-3 mb-3 small text-secondary">
+                                <strong class="text-dark d-block mb-1"><i class="bi bi-quote"></i> Cover Note:</strong>
+                                @app.CoverLetter
+                            </div>
+                        }
+
+                        @if (!string.IsNullOrWhiteSpace(app.RecruiterNotes))
+                        {
+                            <div class="alert alert-warning py-2 px-3 small mb-3">
+                                <i class="bi bi-sticky-fill me-1"></i> <strong>Recruiter Notes:</strong> @app.RecruiterNotes
+                            </div>
+                        }
+
+                        <div class="d-flex align-items-center justify-content-between pt-2 border-top mt-auto mb-3">
+                            <span class="small text-muted">
+                                <i class="bi bi-calendar-event me-1"></i> Applied: @app.AppliedDate.ToString("MMM dd, yyyy")
+                            </span>
+                            @if (!string.IsNullOrEmpty(app.ResumePath))
+                            {
+                                <a href="@app.ResumePath" target="_blank" class="btn btn-sm btn-outline-primary">
+                                    <i class="bi bi-file-earmark-pdf me-1"></i> Download Resume
+                                </a>
+                            }
+                            else
+                            {
+                                <span class="badge bg-light text-muted border">No Document</span>
+                            }
+                        </div>
+
+                        <!-- Recruitment Stage Update Form -->
+                        <div class="p-3 bg-light rounded-3">
+                            <form asp-action="UpdateApplicationStatus" method="post" class="row g-2 align-items-end">
+                                <input type="hidden" name="applicationId" value="@app.Id" />
+                                <input type="hidden" name="jobId" value="@app.JobId" />
+
+                                <div class="col-md-5">
+                                    <label class="form-label small fw-bold text-muted mb-1">Recruitment Stage</label>
+                                    <select name="status" class="form-select form-select-sm">
+                                        <option value="@SD.Status_Applied" selected="@(app.Status == SD.Status_Applied ? "selected" : null)">Applied</option>
+                                        <option value="@SD.Status_UnderReview" selected="@(app.Status == SD.Status_UnderReview ? "selected" : null)">Under Review</option>
+                                        <option value="@SD.Status_Shortlisted" selected="@(app.Status == SD.Status_Shortlisted ? "selected" : null)">Shortlisted</option>
+                                        <option value="@SD.Status_Interview" selected="@(app.Status == SD.Status_Interview ? "selected" : null)">Interview</option>
+                                        <option value="@SD.Status_Offered" selected="@(app.Status == SD.Status_Offered ? "selected" : null)">Offered</option>
+                                        <option value="@SD.Status_Rejected" selected="@(app.Status == SD.Status_Rejected ? "selected" : null)">Rejected</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label class="form-label small fw-bold text-muted mb-1">Internal Note</label>
+                                    <input type="text" name="notes" value="@app.RecruiterNotes" class="form-control form-control-sm" placeholder="e.g. Cleared round 1" />
+                                </div>
+
+                                <div class="col-md-3">
+                                    <button type="submit" class="btn btn-sm btn-jh-primary w-100">
+                                        Update
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="card border-0 shadow-sm rounded-4 p-5 bg-white text-center">
+            <div class="display-3 text-muted mb-3"><i class="bi bi-people"></i></div>
+            <h4 class="fw-bold text-dark">No applicants for this vacancy yet</h4>
+            <p class="text-muted mb-4">When candidates discover and apply for this vacancy, their profiles and resumes will appear here.</p>
+            <a asp-action="Index" class="btn btn-outline-secondary mx-auto">
+                <i class="bi bi-arrow-left me-1"></i> Back to Vacancies
+            </a>
+        </div>
+    }
+</div>

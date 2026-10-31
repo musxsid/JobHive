@@ -1,0 +1,255 @@
+@model JobSearchFilterVM
+@{
+    ViewData["Title"] = "Search Vacancies & Opportunities";
+}
+
+<div class="container py-4">
+    <!-- Breadcrumb -->
+    <nav aria-label="breadcrumb" class="mb-3">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-area="Applicant" asp-controller="Home" asp-action="Index">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Find Jobs</li>
+        </ol>
+    </nav>
+
+    <div class="row g-4">
+        <!-- Filter Sidebar -->
+        <div class="col-lg-3">
+            <form method="get" asp-area="Applicant" asp-controller="Jobs" asp-action="Index" id="filterForm">
+                <div class="filter-card">
+                    <div class="filter-title">
+                        <span><i class="bi bi-funnel-fill text-primary me-2"></i>Filter Vacancies</span>
+                        <a asp-area="Applicant" asp-controller="Jobs" asp-action="Index" class="small text-danger text-decoration-none">Reset</a>
+                    </div>
+
+                    <!-- Keyword Search -->
+                    <div class="mb-3">
+                        <label class="filter-group-label">Keywords</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-white border-end-0"><i class="bi bi-search text-muted"></i></span>
+                            <input type="text" name="SearchKeyword" value="@Model.SearchKeyword" class="form-control border-start-0 ps-0" placeholder="e.g. .NET, React, Designer" />
+                        </div>
+                    </div>
+
+                    <!-- Location / Region -->
+                    <div class="mb-3">
+                        <label class="filter-group-label">Location / Region</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-white border-end-0"><i class="bi bi-geo-alt text-muted"></i></span>
+                            <input type="text" name="Location" value="@Model.Location" class="form-control border-start-0 ps-0" placeholder="e.g. Bangalore or Remote" />
+                        </div>
+                    </div>
+
+                    <!-- Category -->
+                    <div class="mb-3">
+                        <label class="filter-group-label">Job Category</label>
+                        <select name="CategoryId" class="form-select">
+                            <option value="">All Categories</option>
+                            @foreach (var cat in Model.Categories)
+                            {
+                                <option value="@cat.Id" selected="@(Model.CategoryId == cat.Id ? "selected" : null)">
+                                    @cat.Name
+                                </option>
+                            }
+                        </select>
+                    </div>
+
+                    <!-- Job Type -->
+                    <div class="mb-3">
+                        <label class="filter-group-label">Job Type</label>
+                        <select name="JobType" class="form-select">
+                            <option value="">All Job Types</option>
+                            <option value="@SD.JobType_FullTime" selected="@(Model.JobType == SD.JobType_FullTime ? "selected" : null)">Full-Time</option>
+                            <option value="@SD.JobType_Remote" selected="@(Model.JobType == SD.JobType_Remote ? "selected" : null)">Remote</option>
+                            <option value="@SD.JobType_PartTime" selected="@(Model.JobType == SD.JobType_PartTime ? "selected" : null)">Part-Time</option>
+                            <option value="@SD.JobType_Contract" selected="@(Model.JobType == SD.JobType_Contract ? "selected" : null)">Contract</option>
+                            <option value="@SD.JobType_Internship" selected="@(Model.JobType == SD.JobType_Internship ? "selected" : null)">Internship</option>
+                        </select>
+                    </div>
+
+                    <!-- Experience Level -->
+                    <div class="mb-3">
+                        <label class="filter-group-label">Experience Level</label>
+                        <select name="ExperienceLevel" class="form-select">
+                            <option value="">All Levels</option>
+                            <option value="@SD.Exp_Entry" selected="@(Model.ExperienceLevel == SD.Exp_Entry ? "selected" : null)">Entry Level (0-2 yrs)</option>
+                            <option value="@SD.Exp_Mid" selected="@(Model.ExperienceLevel == SD.Exp_Mid ? "selected" : null)">Mid Level (2-5 yrs)</option>
+                            <option value="@SD.Exp_Senior" selected="@(Model.ExperienceLevel == SD.Exp_Senior ? "selected" : null)">Senior Level (5+ yrs)</option>
+                            <option value="@SD.Exp_Lead" selected="@(Model.ExperienceLevel == SD.Exp_Lead ? "selected" : null)">Lead / Manager</option>
+                        </select>
+                    </div>
+
+                    <!-- Salary Range -->
+                    <div class="mb-4">
+                        <label class="filter-group-label">Minimum Salary (₹)</label>
+                        <select name="MinSalary" class="form-select">
+                            <option value="">Any Compensation</option>
+                            <option value="500000" selected="@(Model.MinSalary == 500000 ? "selected" : null)">₹5,00,000+ (5 LPA)</option>
+                            <option value="800000" selected="@(Model.MinSalary == 800000 ? "selected" : null)">₹8,00,000+ (8 LPA)</option>
+                            <option value="1200000" selected="@(Model.MinSalary == 1200000 ? "selected" : null)">₹12,00,000+ (12 LPA)</option>
+                            <option value="1500000" selected="@(Model.MinSalary == 1500000 ? "selected" : null)">₹15,00,000+ (15 LPA)</option>
+                            <option value="2000000" selected="@(Model.MinSalary == 2000000 ? "selected" : null)">₹20,00,000+ (20 LPA)</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn btn-jh-primary w-100">
+                        <i class="bi bi-funnel me-1"></i> Apply Filter
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Job Listings Column -->
+        <div class="col-lg-9">
+            <!-- Results Bar -->
+            <div class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-center bg-white p-3 rounded-4 shadow-sm mb-4 gap-3">
+                <div>
+                    <h5 class="fw-bold mb-0 text-dark">
+                        Showing <span class="text-primary">@Model.TotalJobs</span> Vacancies
+                    </h5>
+                    @if (!string.IsNullOrWhiteSpace(Model.SearchKeyword) || !string.IsNullOrWhiteSpace(Model.Location) || Model.CategoryId.HasValue)
+                    {
+                        <small class="text-muted">
+                            Filtered by:
+                            @(Model.SearchKeyword != null ? $"Keyword '{Model.SearchKeyword}' " : "")
+                            @(Model.Location != null ? $"Location '{Model.Location}' " : "")
+                        </small>
+                    }
+                </div>
+
+                <!-- Sort Control -->
+                <div class="d-flex align-items-center gap-2">
+                    <span class="small text-muted fw-bold text-nowrap">Sort by:</span>
+                    <select class="form-select form-select-sm" style="width: auto;" onchange="location = this.value;">
+                        <option value="@Url.Action("Index", "Jobs", new { SearchKeyword = Model.SearchKeyword, Location = Model.Location, CategoryId = Model.CategoryId, JobType = Model.JobType, ExperienceLevel = Model.ExperienceLevel, MinSalary = Model.MinSalary, SortBy = "date_desc" })" selected="@(Model.SortBy == "date_desc" ? "selected" : null)">Newest First</option>
+                        <option value="@Url.Action("Index", "Jobs", new { SearchKeyword = Model.SearchKeyword, Location = Model.Location, CategoryId = Model.CategoryId, JobType = Model.JobType, ExperienceLevel = Model.ExperienceLevel, MinSalary = Model.MinSalary, SortBy = "salary_desc" })" selected="@(Model.SortBy == "salary_desc" ? "selected" : null)">Highest Salary</option>
+                        <option value="@Url.Action("Index", "Jobs", new { SearchKeyword = Model.SearchKeyword, Location = Model.Location, CategoryId = Model.CategoryId, JobType = Model.JobType, ExperienceLevel = Model.ExperienceLevel, MinSalary = Model.MinSalary, SortBy = "salary_asc" })" selected="@(Model.SortBy == "salary_asc" ? "selected" : null)">Lowest Salary</option>
+                        <option value="@Url.Action("Index", "Jobs", new { SearchKeyword = Model.SearchKeyword, Location = Model.Location, CategoryId = Model.CategoryId, JobType = Model.JobType, ExperienceLevel = Model.ExperienceLevel, MinSalary = Model.MinSalary, SortBy = "title_asc" })" selected="@(Model.SortBy == "title_asc" ? "selected" : null)">Job Title (A-Z)</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Job Cards Grid -->
+            @if (Model.Jobs.Any())
+            {
+                <div class="row g-4">
+                    @foreach (var job in Model.Jobs)
+                    {
+                        <div class="col-md-6 col-xl-4">
+                            <div class="job-card">
+                                <div class="d-flex align-items-start gap-3 mb-3">
+                                    <div class="job-card-logo">
+                                        <i class="bi @(!string.IsNullOrEmpty(job.CompanyLogo) ? job.CompanyLogo : "bi-briefcase")"></i>
+                                    </div>
+                                    <div class="flex-grow-1">
+                                        <a asp-area="Applicant" asp-controller="Jobs" asp-action="Details" asp-route-id="@job.Id" class="job-card-title">
+                                            @job.Title
+                                        </a>
+                                        <div class="job-card-company">
+                                            <i class="bi bi-building me-1"></i> @job.CompanyName
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="d-flex flex-wrap gap-2 mb-3">
+                                    <span class="job-pill">
+                                        <i class="bi bi-geo-alt"></i> @job.Location
+                                    </span>
+                                    <span class="job-pill job-pill-primary">
+                                        <i class="bi bi-clock"></i> @job.JobType
+                                    </span>
+                                    @if (job.IsRemote)
+                                    {
+                                        <span class="job-pill bg-info-subtle text-info-emphasis">
+                                            <i class="bi bi-laptop"></i> Remote
+                                        </span>
+                                    }
+                                </div>
+
+                                <p class="small text-muted mb-3 flex-grow-1" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
+                                    @job.Description
+                                </p>
+
+                                <div class="job-card-footer">
+                                    <div>
+                                        <span class="job-pill job-pill-salary">
+                                            @job.FormattedSalary
+                                        </span>
+                                    </div>
+                                    <div class="d-flex gap-2">
+                                        <a asp-area="Applicant" asp-controller="Jobs" asp-action="Details" asp-route-id="@job.Id" class="btn btn-sm btn-light border">
+                                            View
+                                        </a>
+                                        <a asp-area="Applicant" asp-controller="Jobs" asp-action="Apply" asp-route-id="@job.Id" class="btn btn-sm btn-jh-primary">
+                                            Apply
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+
+                <!-- Pagination -->
+                @if (Model.TotalPages > 1)
+                {
+                    <div class="d-flex justify-content-center mt-5">
+                        <nav aria-label="Page navigation">
+                            <ul class="pagination">
+                                <li class="page-item @(Model.PageNumber == 1 ? "disabled" : "")">
+                                    <a class="page-link rounded-3 me-2" asp-action="Index" 
+                                       asp-route-PageNumber="@(Model.PageNumber - 1)"
+                                       asp-route-SearchKeyword="@Model.SearchKeyword"
+                                       asp-route-Location="@Model.Location"
+                                       asp-route-CategoryId="@Model.CategoryId"
+                                       asp-route-JobType="@Model.JobType"
+                                       asp-route-ExperienceLevel="@Model.ExperienceLevel"
+                                       asp-route-MinSalary="@Model.MinSalary"
+                                       asp-route-SortBy="@Model.SortBy">Previous</a>
+                                </li>
+
+                                @for (int i = 1; i <= Model.TotalPages; i++)
+                                {
+                                    <li class="page-item @(Model.PageNumber == i ? "active" : "")">
+                                        <a class="page-link rounded-3 mx-1" asp-action="Index" 
+                                           asp-route-PageNumber="@i"
+                                           asp-route-SearchKeyword="@Model.SearchKeyword"
+                                           asp-route-Location="@Model.Location"
+                                           asp-route-CategoryId="@Model.CategoryId"
+                                           asp-route-JobType="@Model.JobType"
+                                           asp-route-ExperienceLevel="@Model.ExperienceLevel"
+                                           asp-route-MinSalary="@Model.MinSalary"
+                                           asp-route-SortBy="@Model.SortBy">@i</a>
+                                    </li>
+                                }
+
+                                <li class="page-item @(Model.PageNumber == Model.TotalPages ? "disabled" : "")">
+                                    <a class="page-link rounded-3 ms-2" asp-action="Index" 
+                                       asp-route-PageNumber="@(Model.PageNumber + 1)"
+                                       asp-route-SearchKeyword="@Model.SearchKeyword"
+                                       asp-route-Location="@Model.Location"
+                                       asp-route-CategoryId="@Model.CategoryId"
+                                       asp-route-JobType="@Model.JobType"
+                                       asp-route-ExperienceLevel="@Model.ExperienceLevel"
+                                       asp-route-MinSalary="@Model.MinSalary"
+                                       asp-route-SortBy="@Model.SortBy">Next</a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="bg-white p-5 rounded-4 text-center shadow-sm">
+                    <div class="display-3 text-muted mb-3"><i class="bi bi-search"></i></div>
+                    <h4 class="fw-bold text-dark">No vacancies match your criteria</h4>
+                    <p class="text-muted mb-4">Try adjusting your keyword, location, or salary filters to discover more open positions.</p>
+                    <a asp-area="Applicant" asp-controller="Jobs" asp-action="Index" class="btn btn-jh-primary">
+                        <i class="bi bi-arrow-clockwise me-1"></i> Reset All Filters
+                    </a>
+                </div>
+            }
+        </div>
+    </div>
+</div>

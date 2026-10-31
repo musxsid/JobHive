@@ -1,0 +1,158 @@
+@model Job
+@{
+    ViewData["Title"] = $"{Model.Title} at {Model.CompanyName}";
+    var relatedJobs = ViewBag.RelatedJobs as List<Job> ?? new List<Job>();
+}
+
+<div class="container py-4">
+    <!-- Breadcrumb -->
+    <nav aria-label="breadcrumb" class="mb-4">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-area="Applicant" asp-controller="Home" asp-action="Index">Home</a></li>
+            <li class="breadcrumb-item"><a asp-area="Applicant" asp-controller="Jobs" asp-action="Index">Find Jobs</a></li>
+            <li class="breadcrumb-item active" aria-current="page">@Model.Title</li>
+        </ol>
+    </nav>
+
+    <div class="row g-4">
+        <!-- Main Job Content -->
+        <div class="col-lg-8">
+            <!-- Job Header Card -->
+            <div class="card border-0 shadow-sm rounded-4 p-4 mb-4 bg-white">
+                <div class="d-flex flex-column flex-sm-row align-items-start gap-4 mb-3">
+                    <div class="job-card-logo" style="width: 70px; height: 70px; font-size: 2rem;">
+                        <i class="bi @(!string.IsNullOrEmpty(Model.CompanyLogo) ? Model.CompanyLogo : "bi-briefcase")"></i>
+                    </div>
+                    <div class="flex-grow-1">
+                        <div class="d-flex flex-wrap align-items-center gap-2 mb-2">
+                            <span class="badge bg-primary-subtle text-primary px-3 py-1 rounded-pill fw-bold">
+                                @Model.Category?.Name
+                            </span>
+                            @if (Model.IsRemote)
+                            {
+                                <span class="badge bg-info-subtle text-info px-3 py-1 rounded-pill fw-bold">
+                                    <i class="bi bi-laptop me-1"></i> Remote Available
+                                </span>
+                            }
+                        </div>
+                        <h2 class="fw-bold text-dark mb-1">@Model.Title</h2>
+                        <div class="fs-5 text-muted fw-semibold mb-3">
+                            <i class="bi bi-building me-1"></i> @Model.CompanyName
+                        </div>
+
+                        <div class="d-flex flex-wrap gap-3 text-secondary small">
+                            <span><i class="bi bi-geo-alt-fill text-danger me-1"></i> @Model.Location</span>
+                            <span><i class="bi bi-briefcase-fill text-primary me-1"></i> @Model.JobType</span>
+                            <span><i class="bi bi-person-workspace text-success me-1"></i> @Model.ExperienceLevel</span>
+                            <span><i class="bi bi-calendar-check text-muted me-1"></i> Posted @Model.PostedDate.ToString("MMM dd, yyyy")</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Description & Details -->
+            <div class="card border-0 shadow-sm rounded-4 p-4 mb-4 bg-white">
+                <h4 class="fw-bold mb-3 text-dark">Job Overview</h4>
+                <p class="text-secondary leading-relaxed mb-4">
+                    @Model.Description
+                </p>
+
+                @if (!string.IsNullOrWhiteSpace(Model.Responsibilities))
+                {
+                    <h5 class="fw-bold mb-3 text-dark"><i class="bi bi-check2-square text-primary me-2"></i>Key Responsibilities</h5>
+                    <div class="text-secondary mb-4" style="white-space: pre-line;">
+                        @Model.Responsibilities
+                    </div>
+                }
+
+                @if (!string.IsNullOrWhiteSpace(Model.Requirements))
+                {
+                    <h5 class="fw-bold mb-3 text-dark"><i class="bi bi-mortarboard text-primary me-2"></i>Requirements & Qualifications</h5>
+                    <div class="text-secondary mb-4" style="white-space: pre-line;">
+                        @Model.Requirements
+                    </div>
+                }
+
+                @if (!string.IsNullOrWhiteSpace(Model.Benefits))
+                {
+                    <h5 class="fw-bold mb-3 text-dark"><i class="bi bi-gift text-primary me-2"></i>Perks & Benefits</h5>
+                    <div class="text-secondary mb-3" style="white-space: pre-line;">
+                        @Model.Benefits
+                    </div>
+                }
+            </div>
+
+            <!-- Related Vacancies -->
+            @if (relatedJobs.Any())
+            {
+                <div class="card border-0 shadow-sm rounded-4 p-4 bg-white">
+                    <h5 class="fw-bold mb-3 text-dark">Similar Opportunities in @Model.Category?.Name</h5>
+                    <div class="row g-3">
+                        @foreach (var related in relatedJobs)
+                        {
+                            <div class="col-md-6">
+                                <div class="border rounded-3 p-3 h-100 hover-shadow transition">
+                                    <h6 class="fw-bold mb-1">
+                                        <a asp-action="Details" asp-route-id="@related.Id" class="text-dark text-decoration-none">@related.Title</a>
+                                    </h6>
+                                    <small class="text-muted d-block mb-2">@related.CompanyName &bull; @related.Location</small>
+                                    <span class="badge bg-success-subtle text-success">@related.FormattedSalary</span>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+
+        <!-- Sidebar CTA Card -->
+        <div class="col-lg-4">
+            <div class="card border-0 shadow-sm rounded-4 p-4 bg-white sticky-top" style="top: 90px;">
+                <div class="text-center mb-4">
+                    <span class="small text-muted text-uppercase fw-bold">Offered Compensation</span>
+                    <div class="fs-3 fw-bold text-success my-1">
+                        @Model.FormattedSalary
+                    </div>
+                    <small class="text-muted">Competitive benchmark</small>
+                </div>
+
+                <div class="d-grid gap-2 mb-4">
+                    <a asp-area="Applicant" asp-controller="Jobs" asp-action="Apply" asp-route-id="@Model.Id" class="btn btn-jh-orange btn-lg">
+                        <i class="bi bi-send-fill me-2"></i> Apply For This Job
+                    </a>
+                </div>
+
+                <hr class="my-3 text-muted" />
+
+                <h6 class="fw-bold text-dark mb-3">Job Summary</h6>
+                <ul class="list-unstyled small text-secondary mb-4">
+                    <li class="d-flex justify-content-between py-2 border-bottom">
+                        <span class="text-muted">Category:</span>
+                        <strong class="text-dark">@Model.Category?.Name</strong>
+                    </li>
+                    <li class="d-flex justify-content-between py-2 border-bottom">
+                        <span class="text-muted">Job Type:</span>
+                        <strong class="text-dark">@Model.JobType</strong>
+                    </li>
+                    <li class="d-flex justify-content-between py-2 border-bottom">
+                        <span class="text-muted">Experience:</span>
+                        <strong class="text-dark">@Model.ExperienceLevel</strong>
+                    </li>
+                    <li class="d-flex justify-content-between py-2 border-bottom">
+                        <span class="text-muted">Location:</span>
+                        <strong class="text-dark">@Model.Location</strong>
+                    </li>
+                    <li class="d-flex justify-content-between py-2 border-bottom">
+                        <span class="text-muted">Contact Recruiter:</span>
+                        <strong class="text-dark">@Model.EmployerEmail</strong>
+                    </li>
+                </ul>
+
+                <div class="p-3 bg-light rounded-3 text-center">
+                    <small class="text-muted d-block mb-1">Guaranteed Application Integrity</small>
+                    <span class="badge bg-primary text-white"><i class="bi bi-shield-check me-1"></i> ACID Transactional Safety</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

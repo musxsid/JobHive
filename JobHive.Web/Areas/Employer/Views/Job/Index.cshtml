@@ -1,0 +1,102 @@
+@model IEnumerable<Job>
+@{
+    ViewData["Title"] = "Manage Job Vacancies";
+}
+
+<div class="container py-5">
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 gap-3">
+        <div>
+            <span class="badge bg-primary-subtle text-primary px-3 py-1 rounded-pill fw-bold mb-2">Recruiter Surface</span>
+            <h2 class="fw-bold text-dark mb-1">Posted Vacancies & Recruitment Stages</h2>
+            <p class="text-muted mb-0">Oversee active job postings and candidate pipelines</p>
+        </div>
+        <a asp-action="Create" class="btn btn-jh-orange d-inline-flex align-items-center gap-2">
+            <i class="bi bi-plus-circle-fill"></i> Post New Vacancy
+        </a>
+    </div>
+
+    @if (Model.Any())
+    {
+        <div class="card border-0 shadow-sm rounded-4 overflow-hidden bg-white">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th class="ps-4">Job Title & Company</th>
+                            <th>Category</th>
+                            <th>Location / Type</th>
+                            <th>Compensation</th>
+                            <th>Applicants</th>
+                            <th>Status</th>
+                            <th class="text-end pe-4">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var job in Model)
+                        {
+                            <tr>
+                                <td class="ps-4">
+                                    <div class="fw-bold text-dark">@job.Title</div>
+                                    <small class="text-muted"><i class="bi bi-building me-1"></i>@job.CompanyName</small>
+                                </td>
+                                <td>
+                                    <span class="badge bg-light text-dark border">
+                                        @job.Category?.Name
+                                    </span>
+                                </td>
+                                <td>
+                                    <div>@job.Location</div>
+                                    <small class="text-muted">@job.JobType @(job.IsRemote ? "• Remote" : "")</small>
+                                </td>
+                                <td>
+                                    <span class="text-success fw-bold">@job.FormattedSalary</span>
+                                </td>
+                                <td>
+                                    <a asp-action="Applicants" asp-route-jobId="@job.Id" class="btn btn-sm btn-outline-primary fw-bold rounded-pill px-3">
+                                        <i class="bi bi-people-fill me-1"></i> @(job.Applications?.Count ?? 0) Applicants
+                                    </a>
+                                </td>
+                                <td>
+                                    @if (job.IsActive)
+                                    {
+                                        <span class="badge bg-success-subtle text-success px-3 py-1 rounded-pill">Active</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-secondary px-3 py-1 rounded-pill">Closed</span>
+                                    }
+                                </td>
+                                <td class="text-end pe-4">
+                                    <div class="btn-group">
+                                        <a asp-action="Applicants" asp-route-jobId="@job.Id" class="btn btn-sm btn-light border" title="Review Applicants">
+                                            <i class="bi bi-person-lines-fill text-primary"></i>
+                                        </a>
+                                        <a asp-action="Edit" asp-route-id="@job.Id" class="btn btn-sm btn-light border" title="Edit Vacancy">
+                                            <i class="bi bi-pencil-fill text-secondary"></i>
+                                        </a>
+                                        <form asp-action="Delete" asp-route-id="@job.Id" method="post" class="d-inline" onsubmit="return confirm('Are you sure you want to remove this job vacancy?');">
+                                            <button type="submit" class="btn btn-sm btn-light border" title="Delete Listing">
+                                                <i class="bi bi-trash-fill text-danger"></i>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="card border-0 shadow-sm rounded-4 p-5 bg-white text-center">
+            <div class="display-3 text-muted mb-3"><i class="bi bi-briefcase"></i></div>
+            <h4 class="fw-bold text-dark">No job vacancies posted yet</h4>
+            <p class="text-muted mb-4">Create your first job listing to start receiving applications from qualified candidates.</p>
+            <a asp-action="Create" class="btn btn-jh-orange mx-auto">
+                <i class="bi bi-plus-circle-fill me-1"></i> Post Vacancy Now
+            </a>
+        </div>
+    }
+</div>

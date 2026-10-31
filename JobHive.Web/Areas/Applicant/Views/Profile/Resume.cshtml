@@ -1,0 +1,149 @@
+@model CandidateProfile
+@{
+    ViewData["Title"] = "Awesome Resume & Candidate Profile";
+}
+
+<div class="container py-5">
+    <div class="row g-4">
+        <!-- Profile Preview Card (Awesome Resume) -->
+        <div class="col-lg-4">
+            <div class="awesome-resume-card p-4 mb-4">
+                <div class="text-center mb-4">
+                    <div class="bg-white text-primary rounded-circle p-3 d-inline-flex align-items-center justify-content-center shadow-sm fs-2 mb-2" style="width: 80px; height: 80px;">
+                        <i class="bi bi-person-fill"></i>
+                    </div>
+                    <h4 class="fw-bold text-white mb-0">@Model.FullName</h4>
+                    <p class="small text-white-50 mb-2">@Model.Headline</p>
+                    <span class="badge bg-white text-primary px-3 py-1 rounded-pill fw-bold">
+                        <i class="bi bi-geo-alt-fill me-1"></i> @Model.Location
+                    </span>
+                </div>
+
+                <div class="resume-preview-box mb-3">
+                    <small class="text-white-50 text-uppercase fw-bold">Active Resume Document</small>
+                    <div class="d-flex align-items-center justify-content-between mt-2">
+                        <div class="d-flex align-items-center gap-2">
+                            <i class="bi bi-file-earmark-pdf-fill fs-3 text-warning"></i>
+                            <div>
+                                <div class="fw-bold small text-white text-truncate" style="max-width: 160px;">
+                                    @(Model.ResumeFileName ?? "No document uploaded")
+                                </div>
+                                <small class="text-white-50">PDF / Word</small>
+                            </div>
+                        </div>
+                        @if (!string.IsNullOrEmpty(Model.ResumePath))
+                        {
+                            <a href="@Model.ResumePath" target="_blank" class="btn btn-sm btn-light">
+                                <i class="bi bi-download"></i>
+                            </a>
+                        }
+                    </div>
+                </div>
+
+                <div class="small text-white-50 mb-3">
+                    <strong class="text-white d-block mb-1">Key Technical Skills:</strong>
+                    <div class="d-flex flex-wrap gap-1">
+                        @if (!string.IsNullOrEmpty(Model.Skills))
+                        {
+                            foreach (var skill in Model.Skills.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                            {
+                                <span class="badge bg-white bg-opacity-25 text-white">@skill.Trim()</span>
+                            }
+                        }
+                    </div>
+                </div>
+
+                <div class="small text-white-50">
+                    <strong class="text-white d-block mb-1">Experience Summary:</strong>
+                    <p class="mb-0 small" style="opacity: 0.9;">@Model.Bio</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Edit Profile Form -->
+        <div class="col-lg-8">
+            <div class="card border-0 shadow-sm rounded-4 p-4 p-md-5 bg-white">
+                <div class="d-flex align-items-center gap-3 mb-4 pb-3 border-bottom">
+                    <div class="bg-primary-subtle text-primary p-3 rounded-4 fs-3">
+                        <i class="bi bi-pencil-square"></i>
+                    </div>
+                    <div>
+                        <span class="badge bg-primary text-white mb-1">Candidate Profile</span>
+                        <h2 class="fw-bold text-dark mb-0">Manage Awesome Resume</h2>
+                        <small class="text-muted">Keep your candidate credentials updated for recruiters</small>
+                    </div>
+                </div>
+
+                <form asp-action="Resume" method="post" enctype="multipart/form-data">
+                    <input type="hidden" asp-for="Id" />
+                    <input type="hidden" asp-for="ResumeFileName" />
+                    <input type="hidden" asp-for="ResumePath" />
+
+                    <div class="row g-3 mb-3">
+                        <div class="col-md-6">
+                            <label asp-for="FullName" class="form-label fw-bold">Full Name</label>
+                            <input asp-for="FullName" class="form-control" placeholder="Siddharth Sharma" />
+                            <span asp-validation-for="FullName" class="text-danger small"></span>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label asp-for="Email" class="form-label fw-bold">Email Address</label>
+                            <input asp-for="Email" class="form-control" placeholder="siddharth@example.com" />
+                            <span asp-validation-for="Email" class="text-danger small"></span>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label asp-for="Phone" class="form-label fw-bold">Phone Number</label>
+                            <input asp-for="Phone" class="form-control" placeholder="+91 98765 43210" />
+                        </div>
+
+                        <div class="col-md-6">
+                            <label asp-for="Headline" class="form-label fw-bold">Professional Headline</label>
+                            <input asp-for="Headline" class="form-control" placeholder="e.g. Software Developer (.NET / C#)" />
+                        </div>
+
+                        <div class="col-md-8">
+                            <label asp-for="Location" class="form-label fw-bold">Current Location</label>
+                            <input asp-for="Location" class="form-control" placeholder="e.g. Bangalore, India" />
+                        </div>
+
+                        <div class="col-md-4">
+                            <label asp-for="ExperienceYears" class="form-label fw-bold">Years of Experience</label>
+                            <input asp-for="ExperienceYears" type="number" class="form-control" min="0" max="40" />
+                        </div>
+
+                        <div class="col-12">
+                            <label asp-for="Skills" class="form-label fw-bold">Technical Skills <span class="text-muted small fw-normal">(Comma separated)</span></label>
+                            <input asp-for="Skills" class="form-control" placeholder="C#, ASP.NET Core MVC, SQL Server, Entity Framework Core, JavaScript, Bootstrap" />
+                        </div>
+
+                        <div class="col-12">
+                            <label asp-for="Bio" class="form-label fw-bold">Professional Summary / Bio</label>
+                            <textarea asp-for="Bio" class="form-control" rows="3" placeholder="Brief summary of your internship experience, technical accomplishments, and interests..."></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Upload New Resume -->
+                    <div class="mb-4">
+                        <label class="form-label fw-bold">Upload / Replace Resume Document</label>
+                        <div class="input-group">
+                            <input type="file" name="resumeFile" class="form-control" accept=".pdf,.doc,.docx" />
+                            <span class="input-group-text"><i class="bi bi-file-earmark-arrow-up"></i></span>
+                        </div>
+                        <small class="text-muted">Accepted formats: .pdf, .doc, .docx. Maximum file size: 10MB.</small>
+                    </div>
+
+                    <div class="d-flex justify-content-end gap-2 pt-3 border-top">
+                        <button type="submit" class="btn btn-jh-orange px-4">
+                            <i class="bi bi-check2-circle me-1"></i> Save Profile Changes
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

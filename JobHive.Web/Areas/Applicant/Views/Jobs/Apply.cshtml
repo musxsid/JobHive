@@ -1,0 +1,101 @@
+@model JobApplication
+@{
+    ViewData["Title"] = $"Apply for {Model.Job?.Title}";
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <!-- Breadcrumb -->
+            <nav aria-label="breadcrumb" class="mb-4">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a asp-area="Applicant" asp-controller="Home" asp-action="Index">Home</a></li>
+                    <li class="breadcrumb-item"><a asp-area="Applicant" asp-controller="Jobs" asp-action="Index">Find Jobs</a></li>
+                    <li class="breadcrumb-item"><a asp-area="Applicant" asp-controller="Jobs" asp-action="Details" asp-route-id="@Model.JobId">@Model.Job?.Title</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Apply</li>
+                </ol>
+            </nav>
+
+            <div class="card border-0 shadow-sm rounded-4 p-4 p-md-5 bg-white">
+                <div class="d-flex align-items-center gap-3 mb-4 pb-3 border-bottom">
+                    <div class="bg-primary-subtle text-primary p-3 rounded-4 fs-3">
+                        <i class="bi bi-file-earmark-arrow-up-fill"></i>
+                    </div>
+                    <div>
+                        <span class="badge bg-primary text-white mb-1">Vacancy Application</span>
+                        <h2 class="fw-bold text-dark mb-0">Apply for @Model.Job?.Title</h2>
+                        <small class="text-muted">at @Model.Job?.CompanyName &bull; @Model.Job?.Location</small>
+                    </div>
+                </div>
+
+                <form asp-action="Apply" method="post" enctype="multipart/form-data">
+                    <input type="hidden" asp-for="JobId" />
+                    <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+
+                    <!-- Personal Info -->
+                    <div class="row g-3 mb-4">
+                        <div class="col-md-6">
+                            <label asp-for="ApplicantName" class="form-label fw-bold">Full Name <span class="text-danger">*</span></label>
+                            <input asp-for="ApplicantName" class="form-control form-control-lg fs-6" placeholder="e.g. Siddharth Sharma" />
+                            <span asp-validation-for="ApplicantName" class="text-danger small"></span>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label asp-for="ApplicantEmail" class="form-label fw-bold">Email Address <span class="text-danger">*</span></label>
+                            <input asp-for="ApplicantEmail" type="email" class="form-control form-control-lg fs-6" placeholder="siddharth@example.com" />
+                            <span asp-validation-for="ApplicantEmail" class="text-danger small"></span>
+                        </div>
+
+                        <div class="col-md-12">
+                            <label asp-for="ApplicantPhone" class="form-label fw-bold">Phone Number <span class="text-danger">*</span></label>
+                            <input asp-for="ApplicantPhone" class="form-control form-control-lg fs-6" placeholder="+91 98765 43210" />
+                            <span asp-validation-for="ApplicantPhone" class="text-danger small"></span>
+                        </div>
+                    </div>
+
+                    <!-- Resume Upload Section -->
+                    <div class="mb-4">
+                        <label class="form-label fw-bold">
+                            Upload Resume / CV Document <span class="text-muted fw-normal">(.pdf, .docx, max 10MB)</span>
+                        </label>
+                        <div class="border rounded-4 p-4 text-center bg-light">
+                            <i class="bi bi-cloud-arrow-up fs-1 text-primary mb-2"></i>
+                            <h6 class="fw-bold mb-1">Choose your resume document</h6>
+                            <p class="small text-muted mb-3">Upload your updated resume so recruiters can review your skills</p>
+                            <input type="file" name="resumeFile" class="form-control form-control-sm mx-auto" style="max-width: 380px;" accept=".pdf,.doc,.docx" />
+                            @if (!string.IsNullOrEmpty(Model.ResumeFileName))
+                            {
+                                <div class="mt-3 small text-success">
+                                    <i class="bi bi-file-earmark-check-fill me-1"></i> Current document: <strong>@Model.ResumeFileName</strong>
+                                </div>
+                            }
+                        </div>
+                    </div>
+
+                    <!-- Cover Letter -->
+                    <div class="mb-4">
+                        <label asp-for="CoverLetter" class="form-label fw-bold">
+                            Cover Letter / Note to Recruiter <span class="text-muted fw-normal">(Optional)</span>
+                        </label>
+                        <textarea asp-for="CoverLetter" class="form-control" rows="4" placeholder="Briefly describe why you are a strong fit for this opportunity and your relevant background..."></textarea>
+                        <span asp-validation-for="CoverLetter" class="text-danger small"></span>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="d-flex justify-content-between align-items-center pt-3 border-top">
+                        <a asp-action="Details" asp-route-id="@Model.JobId" class="btn btn-outline-secondary">
+                            <i class="bi bi-arrow-left me-1"></i> Back to Listing
+                        </a>
+                        <button type="submit" class="btn btn-jh-orange btn-lg px-4">
+                            <i class="bi bi-send-check-fill me-2"></i> Submit Application
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,0 +1,134 @@
+@{
+    ViewData["Title"] = "Project Architecture & Internship Overview";
+}
+
+<div class="container py-5">
+    <!-- Header Banner -->
+    <div class="card border-0 shadow-sm rounded-4 p-4 p-md-5 mb-5 bg-white">
+        <div class="row align-items-center g-4">
+            <div class="col-lg-8">
+                <span class="badge bg-primary-subtle text-primary px-3 py-2 rounded-pill fw-bold mb-3">
+                    <i class="bi bi-mortarboard-fill me-1"></i> Software Developer Internship Showcase
+                </span>
+                <h1 class="display-5 fw-bold text-dark mb-3">
+                    JobHive Recruitment Portal
+                </h1>
+                <p class="lead text-muted mb-4">
+                    Developed during Software Developer Internship at <strong>CodeArrest Softwares Pvt. Ltd.</strong> in Kota, India (June 24, 2025 – August 23, 2025).
+                </p>
+                <div class="d-flex flex-wrap gap-2">
+                    <span class="badge bg-dark p-2 px-3">Backend: .NET Core MVC</span>
+                    <span class="badge bg-primary p-2 px-3">Language: C#</span>
+                    <span class="badge bg-success p-2 px-3">Database: SQL Server</span>
+                    <span class="badge bg-info text-dark p-2 px-3">ORM: Entity Framework Core</span>
+                    <span class="badge bg-secondary p-2 px-3">UI: Razor Views & Bootstrap 5</span>
+                </div>
+            </div>
+            <div class="col-lg-4 text-center">
+                <div class="p-4 rounded-4 bg-light border">
+                    <div class="fs-1 text-primary mb-2"><i class="bi bi-clock-history"></i></div>
+                    <h5 class="fw-bold mb-1">Search Latency Reduced</h5>
+                    <div class="display-6 fw-bold text-primary mb-2">~35%</div>
+                    <small class="text-muted">Achieved through structured compound database queries and EF Core indexing.</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Interview Talking Point Card -->
+    <div class="card border-primary border-2 shadow-sm rounded-4 p-4 p-md-5 mb-5 bg-light">
+        <div class="d-flex align-items-center gap-3 mb-3">
+            <div class="bg-primary text-white p-3 rounded-circle fs-4">
+                <i class="bi bi-chat-square-quote-fill"></i>
+            </div>
+            <div>
+                <h3 class="fw-bold mb-1 text-dark">How to Speak About JobHive in Interviews</h3>
+                <p class="text-muted mb-0">Direct talking structure for technical discussions</p>
+            </div>
+        </div>
+        <div class="bg-white p-4 rounded-3 border-start border-4 border-primary">
+            <blockquote class="blockquote mb-0 fs-6 fst-italic text-secondary">
+                "At CodeArrest Softwares, I built JobHive, an online recruitment portal using C#, .NET Core MVC, and SQL Server. My primary focus was backend data operations: I designed the relational schema with Entity Framework Core and built compound filtering algorithms that let candidates filter vacancies by title, compensation, and location with optimized database response times. It also taught me how to handle multi-role application tracking workflows while maintaining strict ACID transactional consistency in relational databases."
+            </blockquote>
+        </div>
+    </div>
+
+    <!-- Core Architecture Modules -->
+    <div class="row g-4 mb-5">
+        <div class="col-md-6">
+            <div class="card h-100 border-0 shadow-sm rounded-4 p-4 bg-white">
+                <div class="d-flex align-items-center gap-3 mb-3">
+                    <div class="bg-primary-subtle text-primary p-3 rounded-3 fs-4">
+                        <i class="bi bi-funnel-fill"></i>
+                    </div>
+                    <h4 class="fw-bold mb-0">1. Multi-Parameter Job Search</h4>
+                </div>
+                <p class="text-muted">
+                    Implemented multi-criteria search filters allowing candidates to query vacancies simultaneously by keyword, location, salary range, job type, and category. Structured compound database queries in Entity Framework Core to evaluate criteria concurrently, optimizing SQL execution time and reducing search latency by roughly 35%.
+                </p>
+                <ul class="list-unstyled small text-secondary">
+                    <li><i class="bi bi-check2-circle text-success me-2"></i>Concurrent criteria evaluation using <span class="badge bg-light text-dark border">IQueryable</span> chaining</li>
+                    <li><i class="bi bi-check2-circle text-success me-2"></i>Indexed SQL Server columns (<span class="badge bg-light text-dark border">Title, Location, SalaryMin, CategoryId</span>)</li>
+                    <li><i class="bi bi-check2-circle text-success me-2"></i>AsNoTracking() for high-throughput read queries</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card h-100 border-0 shadow-sm rounded-4 p-4 bg-white">
+                <div class="d-flex align-items-center gap-3 mb-3">
+                    <div class="bg-warning-subtle text-warning p-3 rounded-3 fs-4">
+                        <i class="bi bi-diagram-3-fill"></i>
+                    </div>
+                    <h4 class="fw-bold mb-0">2. Multi-Role Recruitment Tracking</h4>
+                </div>
+                <p class="text-muted">
+                    Built distinct workflow surfaces for Job Seekers, Recruiters, and Administrators. Candidates can create profiles, upload application documents, browse listings, and submit applications. Recruiters can post vacancies, update job specifications, review incoming applicants, and track candidate progress through recruitment stages.
+                </p>
+                <ul class="list-unstyled small text-secondary">
+                    <li><i class="bi bi-check2-circle text-success me-2"></i>Recruiter status transitions: <span class="badge bg-light text-dark border">Applied &rarr; Under Review &rarr; Interview &rarr; Offered</span></li>
+                    <li><i class="bi bi-check2-circle text-success me-2"></i>Candidate "My Applications" real-time status tracking dashboard</li>
+                    <li><i class="bi bi-check2-circle text-success me-2"></i>Candidate resume document upload pipeline</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card h-100 border-0 shadow-sm rounded-4 p-4 bg-white">
+                <div class="d-flex align-items-center gap-3 mb-3">
+                    <div class="bg-success-subtle text-success p-3 rounded-3 fs-4">
+                        <i class="bi bi-database-check"></i>
+                    </div>
+                    <h4 class="fw-bold mb-0">3. Schema & ACID Data Integrity</h4>
+                </div>
+                <p class="text-muted">
+                    Designed normalized relational database tables in SQL Server to map entities (Categories, Jobs, JobApplications, and CandidateProfiles). Utilized Entity Framework Core for Object-Relational Mapping (ORM) and relationship enforcement with foreign keys and cascade actions.
+                </p>
+                <ul class="list-unstyled small text-secondary">
+                    <li><i class="bi bi-check2-circle text-success me-2"></i>Unit of Work and Repository design patterns</li>
+                    <li><i class="bi bi-check2-circle text-success me-2"></i>ACID transactions with <span class="badge bg-light text-dark border">BeginTransaction()</span> & <span class="badge bg-light text-dark border">Commit()</span></li>
+                    <li><i class="bi bi-check2-circle text-success me-2"></i>100% referential consistency on document uploads and application submissions</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card h-100 border-0 shadow-sm rounded-4 p-4 bg-white">
+                <div class="d-flex align-items-center gap-3 mb-3">
+                    <div class="bg-info-subtle text-info p-3 rounded-3 fs-4">
+                        <i class="bi bi-brush-fill"></i>
+                    </div>
+                    <h4 class="fw-bold mb-0">4. Responsive Razor UI</h4>
+                </div>
+                <p class="text-muted">
+                    Developed responsive UI views using Razor syntax, HTML5, modern CSS3, and JavaScript. Designed with accessibility, mobile compatibility, and modern purple-and-orange accents matching industry recruitment platforms.
+                </p>
+                <ul class="list-unstyled small text-secondary">
+                    <li><i class="bi bi-check2-circle text-success me-2"></i>Modern Plus Jakarta Sans typography and mobile-first grid</li>
+                    <li><i class="bi bi-check2-circle text-success me-2"></i>Interactive role switching for friction-free end-to-end evaluation</li>
+                    <li><i class="bi bi-check2-circle text-success me-2"></i>Instant Toastr & SweetAlert2 user feedback notifications</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
