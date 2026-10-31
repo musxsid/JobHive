@@ -12,7 +12,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - JobHive | Recruitment & Job Application Portal</title>
+    <title>@ViewData["Title"] - JobHive | Online Recruitment & Career Portal</title>
 
     <!-- Google Fonts: Plus Jakarta Sans -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -33,9 +33,33 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 </head>
 <body>
+    <!-- Top Scroll Progress Indicator -->
+    <div id="scroll-progress" class="scroll-progress-bar"></div>
+
+    <!-- Interactive Ambient Cursor Spotlight & Floating Meshes -->
+    <div id="cursor-spotlight" class="cursor-glow-spotlight"></div>
+    <div class="mesh-orb mesh-orb-1"></div>
+    <div class="mesh-orb mesh-orb-2"></div>
+    <div class="mesh-orb mesh-orb-3"></div>
+
+    <!-- 1. App Load Intro Animation (3-4 Seconds Experience) -->
+    <div id="splash-screen" class="splash-screen">
+        <div class="splash-content">
+            <div class="splash-logo">
+                <div class="brand-icon-box">
+                    <i class="bi bi-briefcase-fill"></i>
+                </div>
+                <h1 class="splash-title">Job<span>Hive</span></h1>
+            </div>
+            <p class="splash-tagline">Find Your Future &bull; Elevate Your Career</p>
+            <div class="splash-loader-bar"></div>
+        </div>
+    </div>
+
+    <!-- Header Navigation -->
     <header>
         <nav class="navbar navbar-expand-lg navbar-jobhive sticky-top">
-            <div class="container">
+            <div class="container-xl">
                 <!-- Brand Logo -->
                 <a class="navbar-brand-jobhive" asp-area="Applicant" asp-controller="Home" asp-action="Index">
                     <div class="brand-icon-box">
@@ -50,80 +74,88 @@
                 </button>
 
                 <div class="collapse navbar-collapse" id="navbarMain">
-                    <ul class="navbar-nav mx-auto mb-2 mb-lg-0 gap-1">
-                        <li class="nav-item">
-                            <a class="nav-link nav-link-jh" asp-area="Applicant" asp-controller="Home" asp-action="Index">
-                                <i class="bi bi-house me-1"></i> Home
-                            </a>
-                        </li>
+                    <ul class="navbar-nav mx-auto mb-2 mb-lg-0 gap-2">
                         <li class="nav-item">
                             <a class="nav-link nav-link-jh" asp-area="Applicant" asp-controller="Jobs" asp-action="Index">
-                                <i class="bi bi-search me-1"></i> Find Jobs
+                                <i class="bi bi-search"></i>
+                                <span>Find Jobs</span>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link nav-link-jh" href="/#categories">
-                                <i class="bi bi-grid me-1"></i> Categories
+                                <i class="bi bi-grid"></i>
+                                <span>Categories</span>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link nav-link-jh" href="/#how-it-works">
-                                <i class="bi bi-journal-check me-1"></i> How It Works
+                                <i class="bi bi-lightning-charge"></i>
+                                <span>How It Works</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link nav-link-jh" asp-area="Applicant" asp-controller="Home" asp-action="About">
+                                <i class="bi bi-info-circle"></i>
+                                <span>About Us</span>
                             </a>
                         </li>
 
-                        <!-- Contextual Links based on current role -->
+                        <!-- Contextual Dropdowns / Links based on current role -->
                         @if (currentRole == SD.Role_Applicant)
                         {
-                            <li class="nav-item">
-                                <a class="nav-link nav-link-jh text-primary" asp-area="Applicant" asp-controller="Applications" asp-action="MyApplications">
-                                    <i class="bi bi-send-check me-1"></i> My Applications
+                            <li class="nav-item dropdown">
+                                <a class="nav-link nav-link-jh dropdown-toggle text-primary fw-semibold" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="bi bi-person-workspace"></i>
+                                    <span>My Career</span>
                                 </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link nav-link-jh" asp-area="Applicant" asp-controller="Profile" asp-action="Resume">
-                                    <i class="bi bi-file-earmark-person me-1"></i> Awesome Resume
-                                </a>
+                                <ul class="dropdown-menu border-0 shadow-lg rounded-3 p-2 mt-2">
+                                    <li>
+                                        <a class="dropdown-item py-2 rounded-2" asp-area="Applicant" asp-controller="Applications" asp-action="MyApplications">
+                                            <i class="bi bi-send-check text-primary me-2"></i> Application Tracker
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item py-2 rounded-2" asp-area="Applicant" asp-controller="Profile" asp-action="Resume">
+                                            <i class="bi bi-file-earmark-person text-primary me-2"></i> My Resume Profile
+                                        </a>
+                                    </li>
+                                </ul>
                             </li>
                         }
                         else if (currentRole == SD.Role_Employer)
                         {
                             <li class="nav-item">
-                                <a class="nav-link nav-link-jh text-primary" asp-area="Employer" asp-controller="Job" asp-action="Index">
-                                    <i class="bi bi-building me-1"></i> Manage Vacancies
+                                <a class="nav-link nav-link-jh text-primary fw-semibold" asp-area="Employer" asp-controller="Job" asp-action="Index">
+                                    <i class="bi bi-building"></i>
+                                    <span>Manage Vacancies</span>
                                 </a>
                             </li>
                         }
                         else if (currentRole == SD.Role_Admin)
                         {
                             <li class="nav-item dropdown">
-                                <a class="nav-link nav-link-jh dropdown-toggle text-primary" href="#" role="button" data-bs-toggle="dropdown">
-                                    <i class="bi bi-shield-lock me-1"></i> Admin Portal
+                                <a class="nav-link nav-link-jh dropdown-toggle text-primary fw-semibold" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="bi bi-shield-lock"></i>
+                                    <span>Admin Portal</span>
                                 </a>
-                                <ul class="dropdown-menu border-0 shadow-sm rounded-3">
-                                    <li><a class="dropdown-item py-2" asp-area="Admin" asp-controller="Category" asp-action="Index"><i class="bi bi-tags me-2 text-primary"></i>Categories Management</a></li>
-                                    <li><a class="dropdown-item py-2" asp-area="Admin" asp-controller="Dashboard" asp-action="Index"><i class="bi bi-speedometer2 me-2 text-primary"></i>System Metrics</a></li>
+                                <ul class="dropdown-menu border-0 shadow-lg rounded-3 p-2 mt-2">
+                                    <li><a class="dropdown-item py-2 rounded-2" asp-area="Admin" asp-controller="Category" asp-action="Index"><i class="bi bi-tags me-2 text-primary"></i>Categories Taxonomy</a></li>
+                                    <li><a class="dropdown-item py-2 rounded-2" asp-area="Admin" asp-controller="Dashboard" asp-action="Index"><i class="bi bi-speedometer2 me-2 text-primary"></i>Platform Overview</a></li>
                                 </ul>
                             </li>
                         }
-
-                        <li class="nav-item">
-                            <a class="nav-link nav-link-jh" asp-area="Applicant" asp-controller="Home" asp-action="About">
-                                <i class="bi bi-info-circle me-1"></i> Internship Overview
-                            </a>
-                        </li>
                     </ul>
 
                     <!-- Right Action Controls & Role Switcher -->
-                    <div class="d-flex align-items-center gap-2">
+                    <div class="d-flex align-items-center gap-3">
                         <!-- Role Switcher Dropdown -->
                         <div class="dropdown">
                             <button class="role-badge-pill dropdown-toggle border-0" type="button" data-bs-toggle="dropdown" aria-expanded="false" title="Switch User Role">
                                 <i class="bi bi-person-badge-fill"></i>
                                 <span>Role: <strong>@currentRole</strong></span>
                             </button>
-                            <ul class="dropdown-menu dropdown-menu-end border-0 shadow-lg rounded-3 p-2">
-                                <li class="dropdown-header text-uppercase small fw-bold text-muted">Switch Platform Role</li>
+                            <ul class="dropdown-menu dropdown-menu-end border-0 shadow-lg rounded-3 p-2 mt-2">
+                                <li class="dropdown-header text-uppercase small fw-bold text-muted">Switch Platform Experience</li>
                                 <li>
                                     <a class="dropdown-item rounded-2 py-2 @(currentRole == SD.Role_Applicant ? "active bg-primary" : "")" 
                                        asp-area="Applicant" asp-controller="Home" asp-action="SwitchRole" asp-route-role="@SD.Role_Applicant">
@@ -169,10 +201,55 @@
         @RenderBody()
     </main>
 
-    <!-- Footer -->
+    <!-- Floating Chatbot Widget -->
+    <button id="chatbot-fab" class="chatbot-fab" title="Chat with JobHive Assistant" aria-label="Open chat assistant">
+        <i class="bi bi-chat-dots-fill"></i>
+        <span class="chatbot-fab-pulse"></span>
+    </button>
+
+    <div id="chatbot-panel" class="chatbot-panel" role="dialog" aria-label="JobHive Assistant">
+        <div class="chatbot-header">
+            <div class="d-flex align-items-center gap-2">
+                <div class="brand-icon-box" style="width:34px;height:34px;font-size:0.95rem;">
+                    <i class="bi bi-briefcase-fill"></i>
+                </div>
+                <div>
+                    <strong class="d-block" style="font-size: 0.95rem;">JobHive Assistant</strong>
+                    <small style="opacity: 0.85; font-size: 0.75rem;"><span class="online-indicator-dot"></span> Online &bull; Instant Career Guide</small>
+                </div>
+            </div>
+            <button type="button" class="btn btn-sm text-white p-0 border-0" id="chatbot-close" onclick="document.getElementById('chatbot-fab').click();" aria-label="Close chat">
+                <i class="bi bi-x-lg fs-6"></i>
+            </button>
+        </div>
+        <div class="chatbot-body">
+            <div class="chat-bubble bot">
+                Hi! Welcome to JobHive. How can I help you discover your dream career today?
+            </div>
+            <div class="chatbot-suggestions mt-2 d-flex flex-wrap gap-1">
+                <button type="button" class="chat-suggestion-chip" data-msg="jobs">🚀 Find Jobs</button>
+                <button type="button" class="chat-suggestion-chip" data-msg="remote">💼 Remote Roles</button>
+                <button type="button" class="chat-suggestion-chip" data-msg="resume">📄 My Resume</button>
+                <button type="button" class="chat-suggestion-chip" data-msg="apply">✨ How to Apply</button>
+            </div>
+        </div>
+        <div class="chatbot-footer">
+            <input type="text" class="chatbot-input" placeholder="Ask about jobs, applications, resume..." autocomplete="off" />
+            <button type="button" class="chatbot-send" aria-label="Send message">
+                <i class="bi bi-send-fill"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Back to Top Button -->
+    <button id="back-to-top" title="Back to top" aria-label="Back to top">
+        <i class="bi bi-arrow-up"></i>
+    </button>
+
+    <!-- Product Footer (Clean, Modern, Consumer-Oriented) -->
     <footer class="footer-jobhive">
         <div class="container">
-            <div class="row g-4">
+            <div class="row g-4 justify-content-between">
                 <div class="col-lg-4 col-md-6">
                     <div class="navbar-brand-jobhive mb-3">
                         <div class="brand-icon-box">
@@ -180,23 +257,23 @@
                         </div>
                         <span class="text-white">Job<span style="color: #818cf8;">Hive</span></span>
                     </div>
-                    <p class="small text-secondary mb-3">
-                        An enterprise-grade online recruitment and vacancy discovery portal designed with ASP.NET Core MVC, Entity Framework Core, and SQL Server.
+                    <p class="small text-secondary mb-4" style="max-width: 320px; line-height: 1.7;">
+                        Connecting ambitious job seekers with verified employers across top industry sectors. Your ultimate portal for fast-track career discovery.
                     </p>
-                    <div class="footer-internship-badge">
-                        <div class="fw-bold text-white mb-1"><i class="bi bi-award-fill me-1 text-warning"></i> Internship Project</div>
-                        CodeArrest Softwares Pvt. Ltd., Kota, India<br />
-                        <span class="text-muted">June 24, 2025 – August 23, 2025</span><br />
-                        Developed by: <strong>Siddharth</strong>
+                    <div class="d-flex gap-2">
+                        <a href="#" class="footer-social-icon" aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a>
+                        <a href="#" class="footer-social-icon" aria-label="Twitter"><i class="bi bi-twitter-x"></i></a>
+                        <a href="#" class="footer-social-icon" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+                        <a href="https://github.com/musxsid/JobHive" target="_blank" class="footer-social-icon" aria-label="GitHub"><i class="bi bi-github"></i></a>
                     </div>
                 </div>
 
                 <div class="col-lg-2 col-md-6 col-6">
                     <h5>For Candidates</h5>
-                    <a class="footer-link" asp-area="Applicant" asp-controller="Jobs" asp-action="Index"><i class="bi bi-chevron-right small me-1"></i> Browse Vacancies</a>
+                    <a class="footer-link" asp-area="Applicant" asp-controller="Jobs" asp-action="Index"><i class="bi bi-chevron-right small me-1"></i> Browse Jobs</a>
                     <a class="footer-link" asp-area="Applicant" asp-controller="Jobs" asp-action="Index" asp-route-jobType="Remote"><i class="bi bi-chevron-right small me-1"></i> Remote Jobs</a>
                     <a class="footer-link" asp-area="Applicant" asp-controller="Applications" asp-action="MyApplications"><i class="bi bi-chevron-right small me-1"></i> Application Tracker</a>
-                    <a class="footer-link" asp-area="Applicant" asp-controller="Profile" asp-action="Resume"><i class="bi bi-chevron-right small me-1"></i> Awesome Resume</a>
+                    <a class="footer-link" asp-area="Applicant" asp-controller="Profile" asp-action="Resume"><i class="bi bi-chevron-right small me-1"></i> My Resume</a>
                 </div>
 
                 <div class="col-lg-2 col-md-6 col-6">
@@ -207,19 +284,15 @@
                     <a class="footer-link" asp-area="Applicant" asp-controller="Home" asp-action="SwitchRole" asp-route-role="@SD.Role_Employer"><i class="bi bi-chevron-right small me-1"></i> Recruiter Portal</a>
                 </div>
 
-                <div class="col-lg-4 col-md-6">
-                    <h5>Core Architecture & Stack</h5>
-                    <div class="d-flex flex-wrap gap-2 mb-3">
-                        <span class="badge bg-dark border text-light p-2">.NET Core MVC (C#)</span>
-                        <span class="badge bg-dark border text-light p-2">SQL Server</span>
-                        <span class="badge bg-dark border text-light p-2">Entity Framework Core</span>
-                        <span class="badge bg-dark border text-light p-2">Compound Query Optimization</span>
-                        <span class="badge bg-dark border text-light p-2">ACID Transactions</span>
-                        <span class="badge bg-dark border text-light p-2">HTML5 / Bootstrap 5</span>
+                <div class="col-lg-3 col-md-6">
+                    <h5>About JobHive</h5>
+                    <a class="footer-link" asp-area="Applicant" asp-controller="Home" asp-action="About"><i class="bi bi-chevron-right small me-1"></i> Our Mission & Story</a>
+                    <a class="footer-link" href="/#how-it-works"><i class="bi bi-chevron-right small me-1"></i> How It Works</a>
+                    <a class="footer-link" asp-area="Applicant" asp-controller="Home" asp-action="Privacy"><i class="bi bi-chevron-right small me-1"></i> Privacy Policy</a>
+                    <div class="mt-3 p-3 rounded-3" style="background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.08);">
+                        <div class="small text-white fw-bold mb-1"><i class="bi bi-shield-check text-success me-1"></i> 100% Verified Listings</div>
+                        <p class="small text-muted mb-0" style="font-size: 0.8rem;">Every job vacancy is verified to ensure transparent and trusted hiring.</p>
                     </div>
-                    <p class="small text-secondary mb-0">
-                        Evaluates multi-parameter vacancy filters concurrently with optimized SQL execution times, reducing query latency by approximately 35%.
-                    </p>
                 </div>
             </div>
 
@@ -227,12 +300,12 @@
 
             <div class="d-flex flex-column flex-md-row justify-content-between align-items-center gap-3">
                 <div class="small text-secondary">
-                    &copy; @DateTime.UtcNow.Year JobHive Portal. All rights reserved. Built by Siddharth.
+                    &copy; @DateTime.UtcNow.Year JobHive. All rights reserved. Platform by Siddharth.
                 </div>
                 <div class="d-flex gap-3 small">
-                    <a class="text-secondary text-decoration-none" asp-area="Applicant" asp-controller="Home" asp-action="About">Architecture Overview</a>
+                    <a class="text-secondary text-decoration-none" asp-area="Applicant" asp-controller="Home" asp-action="About">About Us</a>
                     <a class="text-secondary text-decoration-none" asp-area="Applicant" asp-controller="Home" asp-action="Privacy">Privacy Policy</a>
-                    <a class="text-secondary text-decoration-none" href="https://github.com/musxsid/JobHive" target="_blank"><i class="bi bi-github me-1"></i> GitHub Repository</a>
+                    <a class="text-secondary text-decoration-none" href="https://github.com/musxsid/JobHive" target="_blank"><i class="bi bi-github me-1"></i> GitHub</a>
                 </div>
             </div>
         </div>

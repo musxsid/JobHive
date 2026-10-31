@@ -3,7 +3,7 @@
     ViewData["Title"] = "Search Vacancies & Opportunities";
 }
 
-<div class="container py-4">
+<div class="container py-4 reveal">
     <!-- Breadcrumb -->
     <nav aria-label="breadcrumb" class="mb-3">
         <ol class="breadcrumb">
@@ -136,7 +136,7 @@
                     @foreach (var job in Model.Jobs)
                     {
                         <div class="col-md-6 col-xl-4">
-                            <div class="job-card">
+                            <div class="job-card card-premium-glow">
                                 <div class="d-flex align-items-start gap-3 mb-3">
                                     <div class="job-card-logo">
                                         <i class="bi @(!string.IsNullOrEmpty(job.CompanyLogo) ? job.CompanyLogo : "bi-briefcase")"></i>

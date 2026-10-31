@@ -14,9 +14,25 @@ namespace JobHive.Web
             // Add services to the container
             builder.Services.AddControllersWithViews();
 
-            // SQL Server Database Configuration
-            builder.Services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+            // Cross-Platform Database Configuration (SQL Server / SQLite)
+            var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? "";
+            var dbProvider = builder.Configuration.GetValue<string>("DatabaseProvider") ?? 
+                (connectionString.Contains(".db") || (connectionString.Contains("Data Source=") && !connectionString.Contains("Server=")) ? "Sqlite" : "SqlServer");
+
+            if (dbProvider.Equals("Sqlite", StringComparison.OrdinalIgnoreCase))
+            {
+                builder.Services.AddDbContext<ApplicationDbContext>(options =>
+                    options.UseSqlite(connectionString));
+            }
+            else
+            {
+                builder.Services.AddDbContext<ApplicationDbContext>(options =>
+                    options.UseSqlServer(connectionString, sqlOptions =>
+                        sqlOptions.EnableRetryOnFailure(
+                            maxRetryCount: 5,
+                            maxRetryDelay: TimeSpan.FromSeconds(5),
+                            errorNumbersToAdd: null)));
+            }
 
             // Unit of Work Dependency Injection
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();

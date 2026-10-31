@@ -1,0 +1,49 @@
+services:
+  jobhive-web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: jobhive-web
+    restart: unless-stopped
+    ports:
+      - "5285:8080"
+      - "5000:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=http://+:8080
+      - DatabaseProvider=SqlServer
+      - ConnectionStrings__DefaultConnection=Server=jobhive-db,1433;Database=JobHive;User Id=sa;Password=JobHive@Passw0rd2026!;TrustServerCertificate=True;
+    depends_on:
+      jobhive-db:
+        condition: service_healthy
+    volumes:
+      - jobhive-resumes:/app/wwwroot/uploads/resumes
+      - jobhive-data:/app/data
+
+  jobhive-db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: jobhive-db
+    restart: unless-stopped
+    ports:
+      - "1433:1433"
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=JobHive@Passw0rd2026!
+      - MSSQL_PID=Developer
+    volumes:
+      - jobhive-sql-data:/var/opt/mssql
+    healthcheck:
+      test: ["CMD-SHELL", "/opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P 'JobHive@Passw0rd2026!' -C -Q 'SELECT 1' || /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P 'JobHive@Passw0rd2026!' -Q 'SELECT 1'"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 15s
+
+volumes:
+  jobhive-sql-data:
+    driver: local
+  jobhive-resumes:
+    driver: local
+  jobhive-data:
+    driver: local
+

@@ -3,14 +3,16 @@
     ViewData["Title"] = "Find Your Future, Elevate Your Career";
 }
 
-<!-- Hero Section (Matches Attached Design) -->
-<section class="hero-section">
-    <div class="container">
+<!-- 1. HERO SECTION (Full Viewport, Interactive, No Cluttered Divs) -->
+<section class="hero-section section-full reveal">
+    <div class="hero-glow-blob hero-glow-1"></div>
+    <div class="hero-glow-blob hero-glow-2"></div>
+    <div class="container position-relative" style="z-index: 1;">
         <div class="row align-items-center g-5">
             <div class="col-lg-7">
                 <div class="hero-tagline">
                     <i class="bi bi-stars text-warning"></i>
-                    <span>Connecting Top Talent with Verified Employers</span>
+                    <span>Trusted Career Portal &bull; Verified Opportunities</span>
                 </div>
 
                 <h1 class="hero-title">
@@ -18,51 +20,51 @@
                 </h1>
 
                 <p class="hero-subtitle">
-                    Streamline your job search with multi-parameter filtering, compound database queries, and transparent multi-role candidate tracking.
+                    Discover thousands of verified career opportunities across leading organizations. Apply effortlessly in one click and track your interview milestones in real time.
                 </p>
 
-                <!-- Search Bar Card (Matches Image) -->
+                <!-- Search Bar Card -->
                 <form asp-area="Applicant" asp-controller="Jobs" asp-action="Index" method="get" class="hero-search-card">
                     <div class="row g-2 align-items-center">
                         <div class="col-md-5">
                             <div class="search-input-group">
                                 <i class="bi bi-search search-input-icon"></i>
-                                <input type="text" name="SearchKeyword" class="search-field" placeholder="Job title, skills, or company" />
+                                <input type="text" name="SearchKeyword" class="search-field" placeholder="Job title, skill, or company" />
                             </div>
                         </div>
 
                         <div class="col-md-4">
                             <div class="search-input-group border-start-md">
                                 <i class="bi bi-geo-alt search-input-icon"></i>
-                                <input type="text" name="Location" class="search-field" placeholder="Location or 'Remote'" />
+                                <input type="text" name="Location" class="search-field" placeholder="City or 'Remote'" />
                             </div>
                         </div>
 
                         <div class="col-md-3 text-end">
-                            <button type="submit" class="btn btn-jh-orange w-100 d-inline-flex align-items-center justify-content-center gap-2">
+                            <button type="submit" class="btn btn-jh-orange w-100">
                                 <i class="bi bi-search"></i>
-                                <span>Search</span>
+                                <span>Search Jobs</span>
                             </button>
                         </div>
                     </div>
                 </form>
 
-                <!-- Popular Search Keywords -->
-                <div class="d-flex flex-wrap align-items-center gap-2">
-                    <span class="small text-muted fw-bold me-1">Popular Searches:</span>
-                    <a asp-area="Applicant" asp-controller="Jobs" asp-action="Index" asp-route-SearchKeyword=".NET Developer" class="badge bg-white text-dark border shadow-sm p-2 text-decoration-none">.NET Developer</a>
-                    <a asp-area="Applicant" asp-controller="Jobs" asp-action="Index" asp-route-SearchKeyword="UI/UX" class="badge bg-white text-dark border shadow-sm p-2 text-decoration-none">UI/UX Designer</a>
-                    <a asp-area="Applicant" asp-controller="Jobs" asp-action="Index" asp-route-Location="Remote" class="badge bg-white text-dark border shadow-sm p-2 text-decoration-none">Remote</a>
-                    <a asp-area="Applicant" asp-controller="Jobs" asp-action="Index" asp-route-SearchKeyword="Data Analyst" class="badge bg-white text-dark border shadow-sm p-2 text-decoration-none">Data Analyst</a>
-                    <a asp-area="Applicant" asp-controller="Jobs" asp-action="Index" asp-route-SearchKeyword="DevOps" class="badge bg-white text-dark border shadow-sm p-2 text-decoration-none">DevOps</a>
+                <!-- Popular Search Tags -->
+                <div class="d-flex flex-wrap align-items-center gap-2 pt-1">
+                    <span class="small text-muted fw-bold me-1">Trending:</span>
+                    <a asp-area="Applicant" asp-controller="Jobs" asp-action="Index" asp-route-SearchKeyword="Developer" class="btn btn-sm btn-jh-ghost py-1 px-3">Developer</a>
+                    <a asp-area="Applicant" asp-controller="Jobs" asp-action="Index" asp-route-SearchKeyword="Designer" class="btn btn-sm btn-jh-ghost py-1 px-3">UI/UX Designer</a>
+                    <a asp-area="Applicant" asp-controller="Jobs" asp-action="Index" asp-route-Location="Remote" class="btn btn-sm btn-jh-ghost py-1 px-3">Remote</a>
+                    <a asp-area="Applicant" asp-controller="Jobs" asp-action="Index" asp-route-SearchKeyword="Marketing" class="btn btn-sm btn-jh-ghost py-1 px-3">Marketing</a>
+                    <a asp-area="Applicant" asp-controller="Jobs" asp-action="Index" asp-route-SearchKeyword="Analyst" class="btn btn-sm btn-jh-ghost py-1 px-3">Data Analyst</a>
                 </div>
             </div>
 
-            <!-- Hero Visual Banner Card (Matches Image Right Side) -->
+            <!-- Hero Visual Banner Card (Interactive Showcase) -->
             <div class="col-lg-5">
                 <div class="hero-banner-wrapper">
-                    <!-- Floating Stat 1 -->
-                    <div class="hero-floating-stat stat-left">
+                    <!-- Floating Stat 1 (Top-Right Floating Above) -->
+                    <div class="hero-floating-stat stat-top-right">
                         <div class="floating-stat-icon">
                             <i class="bi bi-briefcase-fill"></i>
                         </div>
@@ -72,40 +74,73 @@
                         </div>
                     </div>
 
-                    <!-- Floating Stat 2 -->
-                    <div class="hero-floating-stat stat-right">
+                    <!-- Floating Stat 2 (Bottom-Left Floating Below) -->
+                    <div class="hero-floating-stat stat-bottom-left">
                         <div class="floating-stat-icon bg-success-subtle text-success">
-                            <i class="bi bi-check-circle-fill"></i>
+                            <i class="bi bi-patch-check-fill"></i>
                         </div>
                         <div>
-                            <p class="floating-stat-label">Partner Companies</p>
-                            <h4 class="floating-stat-value">@Model.TotalCompanies+ Verified</h4>
+                            <p class="floating-stat-label">Verified Employers</p>
+                            <h4 class="floating-stat-value">@Model.TotalCompanies+ Hiring</h4>
                         </div>
                     </div>
 
-                    <!-- Purple Banner Card Container -->
-                    <div class="hero-banner-card">
-                        <div class="p-3 text-white text-start mb-auto">
-                            <span class="badge bg-white text-primary fw-bold mb-2 px-3 py-2 rounded-pill">
-                                <i class="bi bi-award-fill text-warning me-1"></i> JobHive Platform
-                            </span>
-                            <h4 class="fw-bold mb-1">Your Career Accelerated</h4>
-                            <p class="small text-white-50 mb-0">Multi-Role Candidate Management & Vacancy Tracking</p>
-                        </div>
-                        <div class="bg-white rounded-top-4 p-4 text-start shadow-sm mx-auto w-100 mt-4">
-                            <div class="d-flex align-items-center gap-3 mb-3">
-                                <div class="bg-primary text-white rounded-circle p-2 px-3 fw-bold">JH</div>
-                                <div>
-                                    <h6 class="fw-bold mb-0 text-dark">Enterprise Architecture</h6>
-                                    <small class="text-muted">.NET Core MVC &bull; SQL Server</small>
+                    <!-- Purple Hero Banner Card -->
+                    <div class="hero-banner-card card-premium-glow">
+                        <div class="p-4 text-white text-start">
+                            <div class="mb-3">
+                                <span class="badge bg-white bg-opacity-20 text-white fw-bold px-3 py-2 rounded-pill border border-white-subtle">
+                                    <i class="bi bi-lightning-charge-fill text-warning me-1"></i> Fast-Track Hiring
+                                </span>
+                            </div>
+                            <h3 class="fw-bold mb-1 text-white">Your Career Accelerated</h3>
+                            <p class="small text-white text-opacity-75 mb-3">Connecting top talent with premier companies</p>
+
+                            <!-- Live Matching Preview Feed -->
+                            <div class="hero-match-feed mb-3">
+                                <div class="hero-match-item">
+                                    <div class="d-flex align-items-center gap-2">
+                                        <div class="match-logo"><i class="bi bi-laptop"></i></div>
+                                        <div>
+                                            <div class="fw-bold text-white small">TechCorp Global</div>
+                                            <div class="text-white-50" style="font-size: 0.72rem;">Senior Developer &bull; Remote</div>
+                                        </div>
+                                    </div>
+                                    <span class="badge bg-success bg-opacity-25 text-white border border-success-subtle" style="font-size: 0.7rem;">Shortlisted</span>
+                                </div>
+                                <div class="hero-match-item">
+                                    <div class="d-flex align-items-center gap-2">
+                                        <div class="match-logo"><i class="bi bi-palette"></i></div>
+                                        <div>
+                                            <div class="fw-bold text-white small">PixelCraft Studios</div>
+                                            <div class="text-white-50" style="font-size: 0.72rem;">Lead Designer &bull; Bangalore</div>
+                                        </div>
+                                    </div>
+                                    <span class="badge bg-warning bg-opacity-25 text-white border border-warning-subtle" style="font-size: 0.7rem;">Interview</span>
                                 </div>
                             </div>
-                            <div class="progress mb-2" style="height: 8px;">
-                                <div class="progress-bar bg-primary" role="progressbar" style="width: 85%"></div>
+                        </div>
+
+                        <!-- Candidate Dashboard Visual Preview (Clean, Consumer-Friendly) -->
+                        <div class="bg-white rounded-4 p-3 text-start shadow-sm mx-auto w-100 mb-2">
+                            <div class="d-flex align-items-center justify-content-between mb-2">
+                                <div class="d-flex align-items-center gap-2">
+                                    <div class="bg-primary text-white rounded-circle fw-bold" style="width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; font-size: 0.85rem;">S</div>
+                                    <div>
+                                        <h6 class="fw-bold mb-0 text-dark small">Siddharth</h6>
+                                        <small class="text-success" style="font-size: 0.72rem;"><i class="bi bi-check-circle-fill"></i> Profile Ready to Apply</small>
+                                    </div>
+                                </div>
+                                <span class="badge bg-primary-subtle text-primary fw-bold px-2 py-1" style="font-size: 0.72rem;">85% Match</span>
                             </div>
-                            <div class="d-flex justify-content-between small text-muted">
-                                <span>Query Latency Reduced</span>
-                                <span class="fw-bold text-primary">~35% Faster</span>
+
+                            <div class="progress mb-2" style="height: 6px;">
+                                <div class="progress-bar progress-bar-striped progress-bar-animated bg-primary" role="progressbar" style="width: 85%"></div>
+                            </div>
+
+                            <div class="d-flex justify-content-between align-items-center text-muted" style="font-size: 0.75rem;">
+                                <span><i class="bi bi-send text-primary me-1"></i> 4 Active Applications</span>
+                                <span class="text-success fw-bold"><i class="bi bi-calendar2-check me-1"></i> 2 Interviews</span>
                             </div>
                         </div>
                     </div>
@@ -115,28 +150,33 @@
     </div>
 </section>
 
-<!-- Popular Jobs Categories Section (Matches Image) -->
-<section class="py-5" id="categories">
+<!-- 2. POPULAR JOBS CATEGORIES (Full Viewport, Grid with Hover Depth) -->
+<section class="section-full reveal" id="categories">
     <div class="container">
         <div class="text-center">
-            <h2 class="section-title">Popular Jobs Categories</h2>
+            <h2 class="section-title">Popular Job Categories</h2>
             <p class="section-subtitle">
-                Explore thousands of job opportunities across premier industry sectors and technologies
+                Explore thousands of curated job opportunities across top industry disciplines
             </p>
         </div>
 
         <div class="row g-4">
+            @{
+                var catIndex = 0;
+            }
             @foreach (var cat in Model.PopularCategories)
             {
+                var delay = (catIndex % 4) * 100;
+                catIndex++;
                 <div class="col-lg-3 col-md-6 col-sm-6">
-                    <a asp-area="Applicant" asp-controller="Jobs" asp-action="Index" asp-route-CategoryId="@cat.Id" class="category-card">
+                    <a asp-area="Applicant" asp-controller="Jobs" asp-action="Index" asp-route-CategoryId="@cat.Id" class="category-card" data-delay="@delay">
                         <div class="category-icon-wrapper @cat.BackgroundColorClass @cat.IconColorClass">
                             <i class="bi @cat.Icon"></i>
                         </div>
                         <h4 class="category-title">@cat.Name</h4>
-                        <div class="d-flex align-items-center justify-content-between">
+                        <div class="d-flex align-items-center justify-content-between mt-2">
                             <span class="category-job-count">
-                                @(cat.JobCount > 0 ? $"{cat.JobCount} Active Postings" : "Explore Opportunities")
+                                @(cat.JobCount > 0 ? $"{cat.JobCount} Open Roles" : "Explore Roles")
                             </span>
                             <i class="bi bi-arrow-right text-primary"></i>
                         </div>
@@ -147,16 +187,16 @@
     </div>
 </section>
 
-<!-- Explore Popular Jobs / Featured Jobs Section (Matches Image) -->
-<section class="py-5 bg-white border-top border-bottom">
+<!-- 3. EXPLORE POPULAR JOBS (Streamlined Horizontal Cards, Less Clutter) -->
+<section class="section-full reveal" id="jobs" style="background: #ffffff;">
     <div class="container">
-        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 gap-3">
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-5 gap-3">
             <div>
-                <h2 class="section-title mb-1">Explore Popular Jobs</h2>
-                <p class="text-muted mb-0">Handpicked opportunities updated daily from verified recruiters</p>
+                <h2 class="section-title mb-1">Featured Career Opportunities</h2>
+                <p class="text-muted mb-0">Handpicked roles updated daily from verified recruiters</p>
             </div>
             <div>
-                <a asp-area="Applicant" asp-controller="Jobs" asp-action="Index" class="btn btn-jh-outline d-inline-flex align-items-center gap-2">
+                <a asp-area="Applicant" asp-controller="Jobs" asp-action="Index" class="btn btn-jh-outline">
                     <span>View All Jobs (@Model.TotalActiveJobs)</span>
                     <i class="bi bi-arrow-right"></i>
                 </a>
@@ -166,53 +206,53 @@
         <div class="row g-4">
             @foreach (var job in Model.FeaturedJobs)
             {
-                <div class="col-lg-4 col-md-6">
-                    <div class="job-card">
-                        <div class="d-flex align-items-start gap-3 mb-3">
-                            <div class="job-card-logo">
-                                <i class="bi @(!string.IsNullOrEmpty(job.CompanyLogo) ? job.CompanyLogo : "bi-building")"></i>
-                            </div>
-                            <div class="flex-grow-1">
-                                <a asp-area="Applicant" asp-controller="Jobs" asp-action="Details" asp-route-id="@job.Id" class="job-card-title">
-                                    @job.Title
-                                </a>
-                                <div class="job-card-company">
-                                    <i class="bi bi-building me-1"></i> @job.CompanyName
+                <div class="col-lg-6">
+                    <div class="job-item-card card-premium-glow">
+                        <div>
+                            <div class="d-flex align-items-start gap-3 mb-3">
+                                <div class="job-card-logo">
+                                    <i class="bi @(!string.IsNullOrEmpty(job.CompanyLogo) ? job.CompanyLogo : "bi-building")"></i>
                                 </div>
-                            </div>
-                        </div>
-
-                        <div class="d-flex flex-wrap gap-2 mb-3">
-                            <span class="job-pill">
-                                <i class="bi bi-geo-alt"></i> @job.Location
-                            </span>
-                            <span class="job-pill job-pill-primary">
-                                <i class="bi bi-clock"></i> @job.JobType
-                            </span>
-                            @if (job.IsRemote)
-                            {
-                                <span class="job-pill bg-info-subtle text-info-emphasis">
-                                    <i class="bi bi-laptop"></i> Remote
-                                </span>
-                            }
-                        </div>
-
-                        <p class="small text-muted mb-3 flex-grow-1" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
-                            @job.Description
-                        </p>
-
-                        <div class="job-card-footer">
-                            <div>
+                                <div class="flex-grow-1">
+                                    <a asp-area="Applicant" asp-controller="Jobs" asp-action="Details" asp-route-id="@job.Id" class="job-card-title">
+                                        @job.Title
+                                    </a>
+                                    <div class="job-card-company">
+                                        <i class="bi bi-building me-1"></i> @job.CompanyName
+                                    </div>
+                                </div>
                                 <span class="job-pill job-pill-salary">
                                     @job.FormattedSalary
                                 </span>
                             </div>
+
+                            <p class="small text-muted mb-3" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; line-height: 1.6;">
+                                @job.Description
+                            </p>
+                        </div>
+
+                        <div class="d-flex align-items-center justify-content-between pt-3 border-top border-light">
+                            <div class="d-flex flex-wrap gap-2">
+                                <span class="job-pill">
+                                    <i class="bi bi-geo-alt"></i> @job.Location
+                                </span>
+                                <span class="job-pill job-pill-primary">
+                                    <i class="bi bi-clock"></i> @job.JobType
+                                </span>
+                                @if (job.IsRemote)
+                                {
+                                    <span class="job-pill bg-info-subtle text-info-emphasis">
+                                        <i class="bi bi-laptop"></i> Remote
+                                    </span>
+                                }
+                            </div>
+
                             <div class="d-flex gap-2">
-                                <a asp-area="Applicant" asp-controller="Jobs" asp-action="Details" asp-route-id="@job.Id" class="btn btn-sm btn-light border">
+                                <a asp-area="Applicant" asp-controller="Jobs" asp-action="Details" asp-route-id="@job.Id" class="btn btn-sm btn-jh-ghost">
                                     Details
                                 </a>
                                 <a asp-area="Applicant" asp-controller="Jobs" asp-action="Apply" asp-route-id="@job.Id" class="btn btn-sm btn-jh-primary">
-                                    Apply
+                                    Apply Now
                                 </a>
                             </div>
                         </div>
@@ -223,13 +263,13 @@
     </div>
 </section>
 
-<!-- Recruitment Process (Matches Image) -->
-<section class="py-5" id="how-it-works">
+<!-- 4. HOW IT WORKS (Clean 4-Step Process) -->
+<section class="section-full reveal" id="how-it-works">
     <div class="container">
         <div class="text-center">
-            <h2 class="section-title">Recruitment Process</h2>
+            <h2 class="section-title">How JobHive Works</h2>
             <p class="section-subtitle">
-                A structured four-stage workflow designed for rapid candidate placement and employer visibility
+                A simple, transparent 4-stage process designed to fast-track your hiring
             </p>
         </div>
 
@@ -239,7 +279,7 @@
                     <div class="process-step-num">1</div>
                     <h5 class="process-step-title">Discover Vacancies</h5>
                     <p class="process-step-desc">
-                        Utilize multi-parameter search filters to evaluate keywords, locations, and compensation simultaneously.
+                        Explore verified openings using smart filters by job title, location, compensation, and workplace flexibility.
                     </p>
                 </div>
             </div>
@@ -247,9 +287,9 @@
             <div class="col-lg-3 col-md-6">
                 <div class="process-step-card">
                     <div class="process-step-num">2</div>
-                    <h5 class="process-step-title">Build Awesome Profile</h5>
+                    <h5 class="process-step-title">Create Profile</h5>
                     <p class="process-step-desc">
-                        Upload your resume document and configure candidate credentials, technical skills, and experience summary.
+                        Build your candidate profile, upload your resume document, and highlight your core strengths.
                     </p>
                 </div>
             </div>
@@ -257,9 +297,9 @@
             <div class="col-lg-3 col-md-6">
                 <div class="process-step-card">
                     <div class="process-step-num">3</div>
-                    <h5 class="process-step-title">One-Click Apply</h5>
+                    <h5 class="process-step-title">1-Click Apply</h5>
                     <p class="process-step-desc">
-                        Submit applications with transactional referential integrity, attaching personalized cover notes for recruiters.
+                        Submit applications instantly with your uploaded resume and a personalized cover message for recruiters.
                     </p>
                 </div>
             </div>
@@ -267,9 +307,9 @@
             <div class="col-lg-3 col-md-6">
                 <div class="process-step-card">
                     <div class="process-step-num">4</div>
-                    <h5 class="process-step-title">Track to Hired</h5>
+                    <h5 class="process-step-title">Get Hired</h5>
                     <p class="process-step-desc">
-                        Follow live application status updates through Applied, Under Review, Interview, and Offered stages.
+                        Follow live status updates from initial application review to interview invitations and final offers.
                     </p>
                 </div>
             </div>
@@ -277,22 +317,22 @@
     </div>
 </section>
 
-<!-- Awesome Resume Banner (Exact match of bottom of attached image) -->
-<section class="py-5">
+<!-- 5. AWESOME RESUME BANNER (Consumer-Facing, Clean Preview) -->
+<section class="section-full reveal">
     <div class="container">
         <div class="awesome-resume-card">
-            <div class="row align-items-center g-4">
+            <div class="row align-items-center g-5">
                 <div class="col-lg-7">
                     <span class="badge bg-white text-primary px-3 py-2 rounded-pill fw-bold mb-3">
-                        <i class="bi bi-file-earmark-check-fill text-warning me-1"></i> Stand Out To Recruiters
+                        <i class="bi bi-file-earmark-check-fill text-warning me-1"></i> Stand Out To Top Recruiters
                     </span>
-                    <h2 class="awesome-resume-title">Awesome Resume</h2>
+                    <h2 class="awesome-resume-title">Craft Your Awesome Resume</h2>
                     <p class="awesome-resume-text">
-                        A polished resume and comprehensive candidate profile increase your recruiter response rate significantly. Upload your CV now to let top hiring managers discover your capabilities.
+                        A polished resume and structured candidate profile get you noticed by hiring managers 3x faster. Upload your resume today and let premier employers discover your talent.
                     </p>
                     <div class="d-flex flex-wrap gap-3">
-                        <a asp-area="Applicant" asp-controller="Profile" asp-action="Resume" class="btn btn-jh-orange btn-lg px-4 d-inline-flex align-items-center gap-2">
-                            <i class="bi bi-cloud-arrow-up-fill"></i> Upload Your Resume
+                        <a asp-area="Applicant" asp-controller="Profile" asp-action="Resume" class="btn btn-jh-orange btn-lg px-4">
+                            <i class="bi bi-cloud-arrow-up-fill me-1"></i> Upload Your Resume
                         </a>
                         <a asp-area="Applicant" asp-controller="Jobs" asp-action="Index" class="btn btn-outline-light btn-lg px-4">
                             Browse Open Roles
@@ -303,31 +343,54 @@
                 <div class="col-lg-5">
                     <div class="resume-preview-box">
                         <div class="d-flex align-items-center gap-3 mb-3 pb-3 border-bottom border-white-50">
-                            <div class="bg-white text-primary rounded-circle p-2 px-3 fw-bold fs-5">SS</div>
+                            <div class="bg-white text-primary rounded-circle p-2 px-3 fw-bold fs-5">S</div>
                             <div>
-                                <h5 class="fw-bold mb-0 text-white">Siddharth Sharma</h5>
-                                <small class="text-white-50">Software Developer (.NET / C#)</small>
+                                <h5 class="fw-bold mb-0 text-white">Siddharth</h5>
+                                <small class="text-white-50">Registered Candidate &bull; Job Seeker</small>
                             </div>
                         </div>
                         <div class="mb-3">
-                            <small class="text-white-50 text-uppercase fw-bold">Highlighted Skills</small>
-                            <div class="d-flex flex-wrap gap-2 mt-1">
-                                <span class="badge bg-white text-dark py-1 px-2">C#</span>
-                                <span class="badge bg-white text-dark py-1 px-2">ASP.NET Core MVC</span>
-                                <span class="badge bg-white text-dark py-1 px-2">SQL Server</span>
-                                <span class="badge bg-white text-dark py-1 px-2">EF Core</span>
-                                <span class="badge bg-white text-dark py-1 px-2">ACID Transactions</span>
+                            <small class="text-white-50 text-uppercase fw-bold">Verified Highlights</small>
+                            <div class="d-flex flex-wrap gap-2 mt-2">
+                                <span class="badge bg-white text-dark py-1 px-3">Problem Solving</span>
+                                <span class="badge bg-white text-dark py-1 px-3">Team Leadership</span>
+                                <span class="badge bg-white text-dark py-1 px-3">Effective Communication</span>
+                                <span class="badge bg-white text-dark py-1 px-3">Analytical Thinking</span>
                             </div>
                         </div>
                         <div class="bg-white bg-opacity-25 rounded-3 p-3 d-flex align-items-center justify-content-between">
                             <div>
                                 <i class="bi bi-file-earmark-pdf-fill fs-3 text-warning me-2"></i>
-                                <span class="small fw-bold">Siddharth_Sharma_Resume.pdf</span>
+                                <span class="small fw-bold">Candidate_Resume.pdf</span>
                             </div>
-                            <span class="badge bg-success">Verified</span>
+                            <span class="badge bg-success">Ready to Share</span>
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 6. PLATFORM TRUST METRICS BAR (Animated Counter) -->
+<section class="py-5 bg-white border-top border-bottom reveal">
+    <div class="container">
+        <div class="row g-4 text-center">
+            <div class="col-md-3 col-6">
+                <div class="counter-number counter-value" data-target="15000">0</div>
+                <div class="counter-label">Active Vacancies</div>
+            </div>
+            <div class="col-md-3 col-6">
+                <div class="counter-number counter-value" data-target="4200">0</div>
+                <div class="counter-label">Verified Companies</div>
+            </div>
+            <div class="col-md-3 col-6">
+                <div class="counter-number counter-value" data-target="85000">0</div>
+                <div class="counter-label">Applications Handled</div>
+            </div>
+            <div class="col-md-3 col-6">
+                <div class="counter-number counter-value" data-target="98">0</div>
+                <div class="counter-label">% Candidate Satisfaction</div>
             </div>
         </div>
     </div>

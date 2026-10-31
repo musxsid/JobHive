@@ -169,7 +169,59 @@ JobHive/
 
 ---
 
-## ⚙️ Setup & Running Locally
+## 🐳 Docker Deployment & Cross-Platform Support
+
+JobHive is fully containerized and cross-platform compatible. It can run seamlessly on **Windows**, **macOS (Intel & Apple Silicon)**, and **Linux**.
+
+### Option A: Complete Production Stack (Web + SQL Server 2022 Linux Container)
+Runs the ASP.NET Core web application alongside an official Microsoft SQL Server 2022 Linux container:
+
+```bash
+docker compose up --build
+```
+
+- Web Portal: `http://localhost:5000`
+- SQL Server: `localhost:1433` (User: `sa`, Password: `JobHive@Passw0rd2026!`)
+- Resumes & SQL databases are persisted in Docker volumes.
+
+To stop the containers:
+```bash
+docker compose down
+```
+
+---
+
+### Option B: Lightweight Zero-Dependency Stack (SQLite Provider)
+Ideal for quick evaluations, CI/CD pipelines, or systems without heavy database requirements:
+
+```bash
+docker compose -f docker-compose.sqlite.yml up --build
+```
+
+Access at `http://localhost:5000`.
+
+---
+
+### Option C: Single Docker Run Command
+Build and run with a single container anywhere:
+
+```bash
+# 1. Build container image
+docker build -t jobhive .
+
+# 2. Run standalone container
+docker run -d -p 5000:8080 \
+  -e DatabaseProvider=Sqlite \
+  -e "ConnectionStrings__DefaultConnection=Data Source=/app/data/jobhive.db" \
+  -v jobhive_data:/app/data \
+  --name jobhive jobhive
+```
+
+Open `http://localhost:5000` in your browser. Seed vacancies and sample candidates are automatically generated on first launch!
+
+---
+
+## ⚙️ Setup & Running Locally (Without Docker)
 
 ### Prerequisites
 - [.NET 8.0 SDK](https://dotnet.microsoft.com/download/dotnet/8.0) or higher
@@ -208,5 +260,5 @@ JobHive/
 ---
 
 ## 👨‍💻 Author & Credits
-- **Developer:** Siddharth Sharma ([@musxsid](https://github.com/musxsid))
+- **Developer:** Siddharth ([@musxsid](https://github.com/musxsid))
 - **Internship Organization:** CodeArrest Softwares Pvt. Ltd., Kota, India

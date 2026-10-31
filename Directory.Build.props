@@ -1,6 +1,6 @@
 <Project>
   <PropertyGroup>
     <UseSharedCompilation>false</UseSharedCompilation>
+    <RollForward>LatestMajor</RollForward>
   </PropertyGroup>
 </Project>
-

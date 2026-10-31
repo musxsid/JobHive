@@ -1,0 +1,25 @@
+services:
+  jobhive-web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: jobhive-app
+    restart: unless-stopped
+    ports:
+      - "5285:8080"
+      - "5000:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=http://+:8080
+      - DatabaseProvider=Sqlite
+      - ConnectionStrings__DefaultConnection=Data Source=/app/data/jobhive.db
+    volumes:
+      - jobhive-resumes:/app/wwwroot/uploads/resumes
+      - jobhive-data:/app/data
+
+volumes:
+  jobhive-resumes:
+    driver: local
+  jobhive-data:
+    driver: local
+

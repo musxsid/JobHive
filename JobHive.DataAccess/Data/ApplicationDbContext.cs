@@ -21,6 +21,14 @@ namespace JobHive.DataAccess.Data
 
             // Configure Job - Category relationship
             modelBuilder.Entity<Job>()
+                .Property(j => j.SalaryMin)
+                .HasPrecision(18, 2);
+
+            modelBuilder.Entity<Job>()
+                .Property(j => j.SalaryMax)
+                .HasPrecision(18, 2);
+
+            modelBuilder.Entity<Job>()
                 .HasOne(j => j.Category)
                 .WithMany(c => c.Jobs)
                 .HasForeignKey(j => j.CategoryId)
@@ -238,16 +246,16 @@ namespace JobHive.DataAccess.Data
                 new CandidateProfile
                 {
                     Id = 1,
-                    FullName = "Siddharth Sharma",
+                    FullName = "Siddharth",
                     Email = "siddharth@example.com",
                     Phone = "+91 98765 43210",
-                    Headline = "Full Stack .NET Core Software Developer",
-                    Location = "Kota / Bangalore, India",
-                    Skills = "C#, ASP.NET Core MVC, Entity Framework Core, SQL Server, HTML5, CSS3, JavaScript, REST APIs",
+                    Headline = "Software Developer",
+                    Location = "Bangalore, India",
+                    Skills = "C#, .NET, Web Development, Problem Solving, REST APIs, Database Management",
                     ExperienceYears = 2,
-                    ResumeFileName = "Siddharth_Sharma_Resume.pdf",
+                    ResumeFileName = "Siddharth_Resume.pdf",
                     ResumePath = "/uploads/resumes/sample_resume.pdf",
-                    Bio = "Software developer intern at CodeArrest Softwares. Passionate about designing robust relational schemas, optimizing SQL database query times, and building intuitive user interfaces.",
+                    Bio = "Passionate software developer focused on building high-performance, user-centric web applications and scalable systems.",
                     UpdatedAt = DateTime.UtcNow
                 }
             );
@@ -258,15 +266,15 @@ namespace JobHive.DataAccess.Data
                 {
                     Id = 1,
                     JobId = 1,
-                    ApplicantName = "Siddharth Sharma",
+                    ApplicantName = "Siddharth",
                     ApplicantEmail = "siddharth@example.com",
                     ApplicantPhone = "+91 98765 43210",
-                    CoverLetter = "I have extensive experience working with .NET Core MVC, EF Core, and SQL Server. I built JobHive to streamline multi-role recruitment workflows and compound filtering.",
-                    ResumeFileName = "Siddharth_Sharma_Resume.pdf",
+                    CoverLetter = "Excited to apply for this vacancy. I have hands-on experience building modern, responsive web applications and scalable backends.",
+                    ResumeFileName = "Siddharth_Resume.pdf",
                     ResumePath = "/uploads/resumes/sample_resume.pdf",
                     AppliedDate = DateTime.UtcNow.AddDays(-2),
                     Status = "Interview",
-                    RecruiterNotes = "Candidate cleared technical round 1 with distinction on EF Core relational modeling."
+                    RecruiterNotes = "Candidate has strong problem solving skills and cleared technical screening."
                 },
                 new JobApplication
                 {
