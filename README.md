@@ -3,7 +3,7 @@
 > **Software Developer Internship Project**  
 > **Company:** CodeArrest Softwares Pvt. Ltd., Kota, Rajasthan, India  
 > **Duration:** June 24, 2025 – August 23, 2025  
-> **Developer:** Siddharth Sharma  
+> **Developer:** Siddharth  
 
 [![.NET Core](https://img.shields.io/badge/.NET_Core-8.0-512BD4?logo=dotnet&logoColor=white)](#tech-stack)
 [![C#](https://img.shields.io/badge/C%23-12.0-239120?logo=csharp&logoColor=white)](#tech-stack)
