@@ -140,14 +140,6 @@ erDiagram
 
 ---
 
-## 💬 How to Speak About JobHive in Interviews
-
-When interviewers ask about your work at **CodeArrest Softwares**, use this concise talking structure:
-
-> *"At CodeArrest Softwares, I built **JobHive**, an online recruitment portal using C#, ASP.NET Core MVC, and Microsoft SQL Server. My primary focus was backend data operations: I designed the relational schema with Entity Framework Core and built compound filtering algorithms that let candidates filter vacancies by title, compensation, and location with optimized database response times (~35% latency reduction). It also taught me how to handle multi-role application tracking workflows while maintaining strict ACID transactional consistency in relational databases."*
-
----
-
 ## 🛠️ Project Structure
 
 ```text
